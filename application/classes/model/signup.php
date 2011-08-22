@@ -12,7 +12,7 @@ class Model_Signup extends Sprig
 				'min_length' => 4,
 				'max_length' => 32,
 				'rules'  => array(
-					'regex' => array('/^[-\pL\pN_.]++$/uD')
+					'regex' => array(':value', '/^[-\pL\pN_.]++$/uD')
 				)
 			)),
 			'email' 	=> new Sprig_Field_Email(array(

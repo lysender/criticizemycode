@@ -1,7 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-<title><?php echo ( ! empty($title)) ? $title.' :: ' : '' ?>SimpleStore</title>
+<title><?php echo ( ! empty($title)) ? $title.' :: ' : '' ?>Criticize My Code</title>
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta name="robots" content="all" />
 
@@ -24,9 +24,7 @@
 <![endif]-->
 
 <script type="text/javascript">
-//<![CDATA[
 	var base_url = '<?php echo URL::site('/') ?>';
-//]]>
 </script>
 	
 <?php if (Kohana::$environment == Kohana::DEVELOPMENT && Kohana::$profiling): ?>
@@ -53,20 +51,20 @@
 	echo HTML::script($script.'?v='.APP_VERSION), "\n" ?>
 
 <script type="text/javascript">
-//<![CDATA[
-	<?php
-		if (isset($head_scripts) && $head_scripts) {
-			echo $head_scripts."\n";
-		}
-	?>
-	$(function(){
+	(function($){
 		<?php
-			if (isset($head_readyscripts) && $head_readyscripts) {
-				echo $head_readyscripts."\n";
+			if (isset($head_scripts) && $head_scripts) {
+				echo $head_scripts."\n";
 			}
 		?>
-	});
-//]]>
+		$(function(){
+			<?php
+				if (isset($head_readyscripts) && $head_readyscripts) {
+					echo $head_readyscripts."\n";
+				}
+			?>
+		});
+	})(jQuery);
 </script>
 </body>
 </html>

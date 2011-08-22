@@ -74,7 +74,7 @@ define('GENERIC_SALT', '5uctzl4g1VdaZmR4opZ3SvWCXeTvwqW5');
 /**
  * Defines the version of the application
  */
-define('APP_VERSION', '0.0.3');
+define('APP_VERSION', '0.0.1');
 
 /**
  * Initialize Kohana, setting the default options.
@@ -116,11 +116,11 @@ $modules = array(
 	// 'codebench'  => MODPATH.'codebench',  // Benchmarking tool
 	'database'   => MODPATH.'database',   // Database access
 	// 'image'      => MODPATH.'image',      // Image manipulation
-	// 'orm'        => MODPATH.'orm',        // Object Relationship Mapping
+	'orm'        => MODPATH.'orm',        // Object Relationship Mapping
 	// 'unittest'   => MODPATH.'unittest',   // Unit testing
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
-	'sprig'		 => MODPATH.'sprig',		// Sprig modeling inspired by Django
-	'dc'		 => MODPATH.'dc'			// Dc's collection of libs
+	// 'sprig'		 => MODPATH.'sprig',		// Sprig modeling inspired by Django
+	// 'dc'		 => MODPATH.'dc'			// Dc's collection of libs
 );
 
 /**

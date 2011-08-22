@@ -1,8 +1,8 @@
 <div class="container">
 	<div id="head-top">
 		<h1>
-			<?php echo HTML::anchor('/', 'SimpleStore') ?>
-			<span class="caps thin">Sales and Inventory System</span>
+			<?php echo HTML::anchor('/', 'Criticize My Code') ?>
+			<span class="caps thin">Online code review and criticism</span>
 		</h1>
 		
 		<p id="user-bar">

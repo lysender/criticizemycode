@@ -95,7 +95,7 @@ class Model_Category extends Sprig
 	{
 		$result = DB::select()->from($this->_table)
 			->order_by('name', 'ASC')
-			->execute();
+			->execute($this->_db);
 			
 		if ($result)
 		{

@@ -7,7 +7,7 @@
 		<li><?php echo HTML::anchor('/credits', 'Credits') ?></li>
 		<li><?php echo HTML::anchor('/contact', 'Contact') ?></li>
 	</ul>
-	<p><?php echo HTML::anchor('/', 'SimpleStore - Sales and Inventory System') ?></p>
+	<p><?php echo HTML::anchor('/', 'Criticize My Code') ?></p>
 </div>
 
 <?php if (Kohana::$environment == Kohana::DEVELOPMENT && Kohana::$profiling): ?>

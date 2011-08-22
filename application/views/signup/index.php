@@ -1,4 +1,4 @@
-<h1><strong>Join</strong> and be a StreetWatcher</h1>
+<h1>Join the critics and be <strong>criticized</strong></h1>
 
 <div id="form-wrapper" class="span-14">
 	<?php if (isset($error_message)): ?>

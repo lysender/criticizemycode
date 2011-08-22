@@ -107,16 +107,16 @@ abstract class Controller_Site extends Controller_Template
 		$this->session = Session::instance();
 		
 		// Initialize auth if present
-		$this->auth = Dc_Auth::instance();
+		$this->auth = CMC_Auth::instance();
 		
 		$user = $this->auth->get_user(
-			Sprig::factory('user'), 
-			Sprig::factory('usertoken')
+			ORM::factory('user'), 
+			ORM::factory('token')
 		);
 		
 		if ($user && $this->auto_render)
 		{
-			View::set_global('current_user', $user->username);
+			View::set_global('current_user', $user->nickname);
 		}
 		
 		// Redirect to login for unauthenticated users

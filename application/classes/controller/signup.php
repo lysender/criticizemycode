@@ -1,7 +1,9 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 
 class Controller_Signup extends Controller_Site
-{	
+{
+	protected $_no_auth = TRUE;
+	
 	public function action_index()
 	{
 		if ($this->auth->logged_in())

@@ -20,41 +20,31 @@ class Controller_Login extends Controller_Site
 	public function action_index()
 	{
 		$this->template->title = 'Login';
-		$this->view = View::factory('login/index')
-			->bind('login', $authlogin);	
+		$this->view = View::factory('login/index');
 		
-		$authlogin = Sprig::factory('login');
+		$credentials = Arr::extract($_POST, array('email', 'password', 'remember'));
+		$this->view->login = $credentials;
 		
-		if ( ! empty($_POST))
+		if ($this->request->method() == Request::POST)
 		{
-			try
+			$auth = CMC_Auth::instance();
+			$user = ORM::factory('user');
+			$token = ORM::factory('token');
+			
+			$validation = Validation::factory($_POST);
+			
+			if ($auth->login($user, $credentials, $token))
 			{
-				$authlogin->values($_POST)->login();
-					
-				// Successful login, go to main page
 				$this->request->redirect('/');
 			}
-			catch (Validation_Exception $e)
+			else
 			{
-				$this->_page_error($e->array->errors('login'));
-			}
-			catch (Dc_Auth_Exception $e)
-			{
-				$this->_page_error($e->getMessage(), 'username');
-			}
-			catch (Exception $e)
-			{
-				$this->_page_error('Temporary network failure, try again later', 'username');
-				
-				Kohana::$log->add(
-					Log::ERROR,
-					$e->getMessage()."\n".$e->getTraceAsString()
-				)->write();
+				$this->_page_error('Incorrect email or password', 'email');
 			}
 		}
 		else
 		{
-			$this->_page_setfocus('username');
+			$this->_page_setfocus('email');
 		}
 	}
 	
