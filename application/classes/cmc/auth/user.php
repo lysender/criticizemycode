@@ -84,9 +84,6 @@ class CMC_Auth_User extends ORM {
 	 */
 	public function after_login()
 	{
-		// Update the number of logins
-		$this->logins = $this->logins + 1;
-
 		// Set the last login date
 		$this->last_login = time();
 

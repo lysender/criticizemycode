@@ -26,7 +26,7 @@ class CMC_Auth_Token extends ORM {
 	{
 		if ($this->loaded() && $this->expires >= time())
 		{
-			if ($this->user_agent === sha1(Request::current()->user_agent))
+			if ($this->user_agent === sha1(Request::$user_agent))
 			{
 				return TRUE;
 			}
@@ -74,8 +74,8 @@ class CMC_Auth_Token extends ORM {
 	 */
 	protected function _before_save()
 	{
-		$this->user_agent = sha1(Request::current()->user_agent);
-		$this->token = Text::random('alnum', 32);
+		$this->user_agent = sha1(Request::$user_agent);
+		$this->token = uniqid(microtime(), TRUE);
 		$this->created = time();
 	}
 	

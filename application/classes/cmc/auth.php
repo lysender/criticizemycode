@@ -206,7 +206,14 @@ class CMC_Auth
 		{
 			if ($this->_allow_autologin && $token)
 			{
-				$this->_remember_login($user, $token);
+				try
+				{
+					$this->_remember_login($user, $token);
+				}
+				catch (ORM_Validation_Exception $e)
+				{
+					var_dump($e->errors('token'));
+				}
 			}
 			
 			// Finish the login process
@@ -374,7 +381,7 @@ class CMC_Auth
 	 * 
 	 * @param ORM $user
 	 */
-	protected function _complete_login(Sprig $user)
+	protected function _complete_login(CMC_Auth_User $user)
 	{
 		$user->after_login();
 		
@@ -401,7 +408,7 @@ class CMC_Auth
 	protected function _remember_login(CMC_Auth_User $user, CMC_Auth_Token $token)
 	{
 		// Create a new autologin token
-		$token->generate($user->id, $this->_lifetime);
+		$token->generate($user->id, time() + $this->_lifetime);
 
 		// Set the token used
 		$this->_token = $token;

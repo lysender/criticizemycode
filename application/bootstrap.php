@@ -203,6 +203,11 @@ Route::set('default', '(<controller>(/<action>(/<id>)))')
 	));
 
 /**
+ * Set cookie salt
+ */
+Cookie::$salt = GENERIC_SALT;
+
+/**
  * Cache the routes
  */
 Route::cache(TRUE);
