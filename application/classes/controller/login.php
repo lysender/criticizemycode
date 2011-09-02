@@ -27,19 +27,9 @@ class Controller_Login extends Controller_Site
 		
 		if ($this->request->method() == Request::POST)
 		{
-			$auth = CMC_Auth::instance();
-			$user = ORM::factory('user');
-			$token = ORM::factory('token');
-			
-			$validation = Validation::factory($_POST);
-			
-			if ($auth->login($user, $credentials, $token))
+			if ($this->_login())
 			{
 				$this->request->redirect('/');
-			}
-			else
-			{
-				$this->_page_error('Incorrect email or password', 'email');
 			}
 		}
 		else
@@ -48,11 +38,41 @@ class Controller_Login extends Controller_Site
 		}
 	}
 	
+	/**
+	 * Returns true if and only if logging in succeeds
+	 *
+	 * @return boolean
+	 */
+	protected function _login()
+	{
+		if ($this->request->post('csrf') === $this->_old_token)
+		{
+			if ($this->auth->login(
+				$this->request->post('email'),
+				$this->request->post('password'),
+				(bool) $this->request->post('remember')
+			))
+			{
+				return TRUE;
+			}
+			else
+			{
+				$this->_page_error('Incorrect email or password.', 'email');
+			}
+		}
+		else
+		{
+			$this->_page_error('Session time out, try again.', 'email');
+		}
+		
+		return FALSE;
+	}
+	
 	public function action_logout()
 	{
 		$this->auto_render = false;
 		
-		if (Security::check($this->request->param('id')))
+		if ($this->_old_token === $this->request->param('id'))
 		{
 			$this->auth->logout();
 		}

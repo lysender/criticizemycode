@@ -10,8 +10,11 @@
 		
 		<div class="span-2"><label for="password">Password</label></div>
 		<div class="span-9"><input type="password" name="password" id="password" value="<?php echo $login['password'] ?>" /></div>
+
+		<div class="span-2">&nbsp;</div>
+		<div class="span-9"><label><input type="checkbox" name="remember" id="remember" value="<?php echo $login['remember'] ?>" /> Remember me</label></div>
 		
-		<div class="span-2">&nbsp; <input type="hidden" name="csrf" id="csrf" value="" /></div>
+		<div class="span-2">&nbsp; <input type="hidden" name="csrf" id="csrf" value="<?php echo $csrf_token ?>" /></div>
 		<div class="span-9"><?php echo Form::submit('submit', 'Login') ?></div>
 	</form>
 </div>

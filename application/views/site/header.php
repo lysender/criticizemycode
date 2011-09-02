@@ -8,7 +8,7 @@
 		<p id="user-bar">
 			<?php if (isset($current_user)): ?>
 				<span id="username-span"><?php echo HTML::anchor('/user/'.$current_user, $current_user) ?></span>
-				<?php echo HTML::anchor('/login/logout/'.Security::token(), '(Logout)') ?>
+				<?php echo HTML::anchor('/login/logout/'.$csrf_token, '(Logout)') ?>
 			<?php else: ?>
 				&nbsp;
 			<?php endif ?>

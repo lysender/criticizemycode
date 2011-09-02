@@ -39,6 +39,20 @@ abstract class Controller_Site extends Controller_Template
 	 */
 	protected $_no_auth = FALSE;
 	
+	/**
+	 * For CSRF token - old token
+	 *
+	 * @var string
+	 */
+	protected $_old_token;
+	
+	/**
+	 * For CSRF token - new token
+	 *
+	 * @var string
+	 */
+	protected $_new_token;
+	
 	/** 
 	 * Head navigation selected menu
 	 * 
@@ -107,16 +121,26 @@ abstract class Controller_Site extends Controller_Template
 		$this->session = Session::instance();
 		
 		// Initialize auth if present
-		$this->auth = CMC_Auth::instance();
+		$this->auth = Auth::instance();
 		
-		$user = $this->auth->get_user(
-			ORM::factory('user'), 
-			ORM::factory('token')
-		);
+		$user = $this->auth->get_user();
 		
+		// Set the old and new csrf token
+		$this->_old_token = $this->session->get('csrf_token');
+		$this->_new_token = uniqid();
+		
+		// Set the new token to session
+		$this->session->set('csrf_token', $this->_new_token);
+		
+		// Set username and csrf token to global view template
 		if ($user && $this->auto_render)
 		{
-			View::set_global('current_user', $user->nickname);
+			View::set_global('current_user', $user->username);
+		}
+		
+		if ($this->auto_render)
+		{
+			View::set_global('csrf_token', $this->_new_token);
 		}
 		
 		// Redirect to login for unauthenticated users

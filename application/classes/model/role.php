@@ -3,7 +3,7 @@
  * CMC User model
  *
  */
-class Model_User extends Model_Auth_User {
+class Model_Role extends Model_Auth_Role {
 	
 	/**
 	 * Manually defined table columns
@@ -12,10 +12,7 @@ class Model_User extends Model_Auth_User {
 	 */
 	protected $_table_columns = array(
 		'id' => array(),
-		'email' => array(),
-		'username' => array(),
-		'password' => array(),
-		'logins' => array(),
-		'last_logins' => array(),
+		'name' => array(),
+		'description' => array(),
 	);
 }
