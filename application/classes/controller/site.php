@@ -133,14 +133,14 @@ abstract class Controller_Site extends Controller_Template
 		$this->session->set('csrf_token', $this->_new_token);
 		
 		// Set username and csrf token to global view template
-		if ($user && $this->auto_render)
-		{
-			View::set_global('current_user', $user->username);
-		}
-		
 		if ($this->auto_render)
 		{
 			View::set_global('csrf_token', $this->_new_token);
+			
+			if ($user)
+			{
+				View::set_global('current_user', $user->username);
+			}
 		}
 		
 		// Redirect to login for unauthenticated users
@@ -205,7 +205,7 @@ abstract class Controller_Site extends Controller_Template
 	{
 		if ($this->auto_render)
 		{
-			$this->template->head_scripts .= '$("#'.$id.'").focus();'."\n";
+			$this->template->head_readyscripts .= '$("#'.$id.'").focus();'."\n";
 		}
 	}
 	
@@ -221,10 +221,23 @@ abstract class Controller_Site extends Controller_Template
 		if ($this->auto_render)
 		{
 			if (is_array($error))
-			{
+			{	
+				// Merge external errors from orm validation
+				// to the main error array
+				if ( ! empty($error['_external']))
+				{
+					$ext = $error['_external'];
+					unset($error['_external']);
+					
+					foreach ($ext as $key => $value)
+					{
+						$error[$key] = $value;
+					}
+				}
+				
 				$error_keys = array_keys($error);
 				$first_error = current($error_keys);
-	
+				
 				$this->view->error_message = implode('<br />', $error);
 			
 				if ($focus === TRUE)

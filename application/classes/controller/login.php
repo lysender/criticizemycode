@@ -22,8 +22,11 @@ class Controller_Login extends Controller_Site
 		$this->template->title = 'Login';
 		$this->view = View::factory('login/index');
 		
-		$credentials = Arr::extract($_POST, array('email', 'password', 'remember'));
-		$this->view->login = $credentials;
+		// Assign back the posted credentials to form except for password
+		$this->view->login = Arr::extract(
+			$this->request->post(),
+			array('email', 'remember')
+		) + array('password' => '');
 		
 		if ($this->request->method() == Request::POST)
 		{
@@ -57,7 +60,7 @@ class Controller_Login extends Controller_Site
 			}
 			else
 			{
-				$this->_page_error('Incorrect email or password.', 'email');
+				$this->_page_error('Incorrect username or password.', 'email');
 			}
 		}
 		else
@@ -68,6 +71,10 @@ class Controller_Login extends Controller_Site
 		return FALSE;
 	}
 	
+	/**
+	 * Logs out the user
+	 *
+	 */
 	public function action_logout()
 	{
 		$this->auto_render = false;

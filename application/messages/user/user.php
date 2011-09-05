@@ -13,18 +13,6 @@ return array(
 		'min_length' => 'Email must be at least :param2 characters',
 		'max_length' => 'Email must be at most :param2 characters',
 		'email' => 'Email is invalid',
-		'unique' => 'Email i already exists'
+		'unique' => 'Email already exists'
 	),
-	'password' => array(
-		'not_empty' => 'Password is not entered',
-		'min_length' => 'Password must be at least :param2 characters',
-		'max_length' => 'Password must be at most :param2 characters',
-	),
-	'password_confirm' => array(
-		'matches' => 'Passwords did not match'
-	),
-	'csrf' => array(
-		'not_empty' => 'Security token is missing',
-		'matches' => 'Session timeout, try again'
-	)
 );

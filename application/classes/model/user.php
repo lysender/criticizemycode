@@ -16,6 +16,25 @@ class Model_User extends Model_Auth_User {
 		'username' => array(),
 		'password' => array(),
 		'logins' => array(),
-		'last_logins' => array(),
+		'last_login' => array(),
 	);
+	
+	/**
+	 * Create login role for the current user
+	 *
+	 * @return boolean
+	 */
+	public function create_login_role()
+	{
+		$role = ORM::factory('role', array('name' => 'login'));
+		
+		if ($role->loaded() && $this->loaded())
+		{
+			$role->add('users', $this);
+			
+			return TRUE;
+		}
+		
+		return FALSE;
+	}
 }

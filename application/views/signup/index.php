@@ -1,23 +1,23 @@
 <h1>Join the critics and be <strong>criticized</strong></h1>
 
 <div id="form-wrapper" class="span-14">
-	<?php if (isset($error_message)): ?>
+	<?php if ( ! empty($error_message)): ?>
 	<p class=error><?php echo $error_message ?></p>
 	<?php endif ?>
 	<form action="<?php echo URL::site('/signup') ?>" method="post" enctype="multipart/form-data">
-		<div class="span-4"><?php echo $signup->label('username') ?></div>
-		<div class="span-9"><?php echo $signup->input('username') ?></div>
+		<div class="span-4"><label for="username">Username*</label></div>
+		<div class="span-9"><input type="text" name="username" id="username" value="<?php echo $signup['username'] ?>" /></div>
 
-		<div class="span-4"><?php echo $signup->label('email') ?></div>
-		<div class="span-9"><?php echo $signup->input('email') ?></div>
+		<div class="span-4"><label for="email">Email*</label></div>
+		<div class="span-9"><input type="text" name="email" id="email" value="<?php echo $signup['email'] ?>" /></div>
+
+		<div class="span-4"><label for="password">Password*</label></div>
+		<div class="span-9"><input type="password" name="password" id="password" /></div>
 		
-		<div class="span-4"><?php echo $signup->label('password') ?></div>
-		<div class="span-9"><?php echo $signup->input('password') ?></div>
+		<div class="span-4"><label for="password_confirm">Password confirm*</label></div>
+		<div class="span-9"><input type="password" name="password_confirm" id="password_confirm" /></div>
 		
-		<div class="span-4"><?php echo $signup->label('password_confirm') ?></div>
-		<div class="span-9"><?php echo $signup->input('password_confirm') ?></div>
-		
-		<div class="span-4">&nbsp;<?php echo $signup->input('csrf') ?></div>
-		<div class="span-9"><?php echo Form::submit('submit', 'Signup') ?></div>
+		<div class="span-4">&nbsp; <input type="hidden" name="csrf" id="csrf" /></div>
+		<div class="span-9"><input type="submit" name="submit" id="submit" value="Sign up" /></div>
 	</form>
 </div>

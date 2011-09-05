@@ -53,14 +53,22 @@
 <script type="text/javascript">
 	(function($){
 		<?php
-			if (isset($head_scripts) && $head_scripts) {
+			if ( !empty($head_scripts))
+			{
 				echo $head_scripts."\n";
 			}
 		?>
+
 		$(function(){
 			<?php
-				if (isset($head_readyscripts) && $head_readyscripts) {
+				if ( !empty($head_readyscripts))
+				{
 					echo $head_readyscripts."\n";
+				}
+			
+				if ( !empty($csrf_token))
+				{
+					echo '$("#csrf").val("'.$csrf_token.'");'."\n";
 				}
 			?>
 		});
