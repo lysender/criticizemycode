@@ -6,6 +6,13 @@
 abstract class Auth extends Kohana_Auth {
 	
 	/**
+	 * User object
+	 *
+	 * @var Model_User
+	 */
+	protected $_user;
+	
+	/**
 	 * Gets the currently logged in user from the session.
 	 * Returns NULL if no user is currently logged in.
 	 *
@@ -13,6 +20,11 @@ abstract class Auth extends Kohana_Auth {
 	 */
 	public function get_user($default = NULL)
 	{
+		if ($this->_user instanceof Model_User && $this->_user->loaded())
+		{
+			return $this->_user;
+		}
+		
 		$id = $this->_session->get($this->_config['session_key'], $default);
 		
 		if ($id)
@@ -23,7 +35,9 @@ abstract class Auth extends Kohana_Auth {
 			
 			if ($user->loaded())
 			{
-				return $user;
+				$this->_user = $user;
+				
+				return $this->_user;
 			}
 		}
 		

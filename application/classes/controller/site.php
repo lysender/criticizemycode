@@ -18,6 +18,13 @@ abstract class Controller_Site extends Controller_Template
 	public $view;
 	
 	/**
+	 * Sidebar template
+	 *
+	 * @var string
+	 */
+	public $sidebar = 'site/sidebar';
+	
+	/**
 	 * @var string
 	 */
 	public $footer = 'site/footer';
@@ -37,7 +44,7 @@ abstract class Controller_Site extends Controller_Template
 	 * 
 	 * @var boolean
 	 */
-	protected $_no_auth = FALSE;
+	protected $_no_auth = TRUE;
 	
 	/**
 	 * For CSRF token - old token
@@ -187,7 +194,9 @@ abstract class Controller_Site extends Controller_Template
 		{			
 			// Template disyplay logic
 			$this->template->header = View::factory($this->header);
+			
 			$this->template->content = $this->view;
+			$this->template->sidebar = View::factory($this->sidebar);
 			
 			$this->template->footer = View::factory($this->footer);			
 		}

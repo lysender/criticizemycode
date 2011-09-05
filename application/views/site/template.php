@@ -39,7 +39,15 @@
 <div id="header"><?php echo $header ?></div>
 
 <div id="content">
-	<div class="container"><?php echo $content ?><div class="clear"></div></div>
+	<div class="container">
+		<div id="main-content" class="span-16">
+			<?php echo $content ?>
+		</div>
+		<div id="side-bar" class="span-7 push-1 last">
+			<?php echo $sidebar ?>
+		</div>
+		<div class="clear"></div>
+	</div>
 </div>
 
 <div id="footer">
