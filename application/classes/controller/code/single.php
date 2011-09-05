@@ -20,9 +20,6 @@ class Controller_Code_Single extends Controller_Site {
 			throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
 		}
 
-		// Use customized Markdown parser
-		define('MARKDOWN_PARSER_CLASS', 'Kodoc_Markdown');
-
 		if ( ! class_exists('Markdown', FALSE))
 		{
 			// Load Markdown support
