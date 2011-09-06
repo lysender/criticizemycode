@@ -47,6 +47,26 @@ abstract class Controller_Site extends Controller_Template
 	protected $_no_auth = TRUE;
 	
 	/**
+	 * Indicates whether or not to track the current page
+	 * Set this to FALSE for pages like login/signup or AJAX pages
+	 *
+	 * @var boolean
+	 */
+	protected $_track_page = TRUE;
+	
+	/**
+	 * @var string
+	 */
+	protected $_current_page;
+	
+	/**
+	 * The previously visited page tracked
+	 *
+	 * @var string
+	 */
+	protected $_prev_page;
+	
+	/**
 	 * For CSRF token - old token
 	 *
 	 * @var string
@@ -76,10 +96,6 @@ abstract class Controller_Site extends Controller_Template
 	{
 		// make sure template is initialized first
 		parent::before();
-		
-		// Initialize current page URL
-		// we are not using query string so uri is only used
-		$this->current_page = $this->request->uri();
 
 		if ($this->auto_render)
 		{
@@ -148,6 +164,16 @@ abstract class Controller_Site extends Controller_Template
 			{
 				View::set_global('current_user', $user->username);
 			}
+		}
+		
+		// Track visited pages
+		$this->_prev_page = $this->session->get('prev_page');
+		$this->_current_page = $this->request->uri();
+		
+		// Set previous page from the current page
+		if ($this->_track_page)
+		{
+			$this->session->set('prev_page', $this->_current_page);
 		}
 		
 		// Redirect to login for unauthenticated users

@@ -13,6 +13,13 @@ class Controller_Signup extends Controller_Site
 	protected $_no_auth = TRUE;
 	
 	/**
+	 * Don't track page
+	 *
+	 * @var boolean
+	 */
+	protected $_track_page = FALSE;
+	
+	/**
 	 * Signup form page
 	 *
 	 */

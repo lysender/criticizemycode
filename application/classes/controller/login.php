@@ -13,6 +13,13 @@ class Controller_Login extends Controller_Site
 	 */
 	protected $_no_auth = TRUE;
 	
+	/**
+	 * Don't track page
+	 *
+	 * @var boolean
+	 */
+	protected $_track_page = FALSE;
+	
 	/** 
 	 * Login page
 	 * 
@@ -32,7 +39,14 @@ class Controller_Login extends Controller_Site
 		{
 			if ($this->_login())
 			{
-				$this->request->redirect('/');
+				if ($this->_prev_page)
+				{
+					$this->request->redirect($this->_prev_page);
+				}
+				else
+				{
+					$this->request->redirect('/');
+				}
 			}
 		}
 		else
@@ -84,7 +98,13 @@ class Controller_Login extends Controller_Site
 			$this->auth->logout();
 		}
 		
-		// Go back to main
-		$this->request->redirect('/');
+		if ($this->_prev_page)
+		{
+			$this->request->redirect($this->_prev_page);
+		}
+		else
+		{
+			$this->request->redirect('/');
+		}
 	}
 }
