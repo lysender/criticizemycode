@@ -5,7 +5,7 @@
  */
 class Model_Code extends ORM {
 	
-	protected $_table_name = 'cmc_code';
+	protected $_table_name = 'code';
 	
 	/**
 	 * Code post belons to user
@@ -99,3 +99,4 @@ class Model_Code extends ORM {
 		return $this->create();
 	}
 }
+
