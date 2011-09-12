@@ -3,6 +3,6 @@
 		<input type="hidden" name="referer" id="referer" />
 		<input type="hidden" name="target" id="target" />
 		<input type="hidden" name="yes" id="yes" value="Yes" />
-		<input type="hidden" name="csrf" id="csrf" value="<?php echo Security::token(TRUE) ?>" />
+		<input type="hidden" name="csrf" id="csrf" class="csrf-field" />
 	</div>
 </form>

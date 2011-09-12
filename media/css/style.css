@@ -145,6 +145,28 @@ body .container {
 }
 
 /**************************************/
+/*            SEARCH BAR              */
+/**************************************/
+#search-bar {
+	position: absolute;
+	margin-left: 500px;
+	margin-top: 15px;
+}
+#search-bar input {
+	float: left;
+	display: block;
+}
+#search_keyword {
+	width: 250px;
+	margin-top: 1px;
+	font-size: 1.1em;
+	font-family: Helvetica,Arial,sans-serif;
+}
+#search_submit {
+	width: 80px;
+	margin-left: 5px;
+}
+/**************************************/
 /*            MAIN CONTENT            */
 /**************************************/
 #content {

@@ -76,7 +76,7 @@
 			
 				if ( !empty($csrf_token))
 				{
-					echo '$("#csrf").val("'.$csrf_token.'");'."\n";
+					echo '$(".csrf-field").val("'.$csrf_token.'");'."\n";
 				}
 			?>
 		});

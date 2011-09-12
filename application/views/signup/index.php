@@ -17,7 +17,7 @@
 		<div class="span-4"><label for="password_confirm">Password confirm</label></div>
 		<div class="span-11"><input type="password" name="password_confirm" id="password_confirm" /></div>
 		
-		<div class="span-4">&nbsp; <input type="hidden" name="csrf" id="csrf" /></div>
+		<div class="span-4">&nbsp; <input type="hidden" name="csrf" id="csrf" class="csrf-field" /></div>
 		<div class="span-11"><input type="submit" name="submit" id="submit" value="Sign up" /></div>
 	</form>
 </div>

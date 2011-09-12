@@ -18,7 +18,7 @@
 		<div class="span-3">&nbsp;</div>
 		<div class="span-12"><label><input type="checkbox" name="remember" id="remember" value="1" <?php echo (!empty($login['remember']) ? 'checked="checked" ' : '') ?> /> Remember me</label></div>
 		
-		<div class="span-3">&nbsp; <input type="hidden" name="csrf" id="csrf" /></div>
+		<div class="span-3">&nbsp; <input type="hidden" name="csrf" id="csrf" class="csrf-field" /></div>
 		<div class="span-12"><?php echo Form::submit('submit', 'Login') ?></div>
 	</form>
 </div>

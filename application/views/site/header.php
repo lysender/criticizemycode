@@ -21,6 +21,13 @@
 
 <div id="head-nav">
 	<div class="container">
+		<div id="search-bar">
+			<form id="search-form" method="post" action="<?php echo URL::site('/search') ?>">
+				<input type="text" name="search_keyword" id="search_keyword" />
+				<input type="submit" name="submit" id="search_submit" value="Search" />
+				<input type="hidden" name="csrf" class="csrf-field" />
+			</form>
+		</div>
 		<ul>
 			<?php foreach ($head_nav as $index => $nav): ?>
 				<li<?php echo $nav['class'] ?>>
