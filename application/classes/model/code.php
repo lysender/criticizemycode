@@ -5,8 +5,6 @@
  */
 class Model_Code extends ORM {
 	
-	protected $_table_name = 'code';
-	
 	/**
 	 * Code post belons to user
 	 *
@@ -97,6 +95,19 @@ class Model_Code extends ORM {
 		$this->date_posted = time();
 		
 		return $this->create();
+	}
+	
+	/**
+	 * Returns the absolute URL for viewing a code post
+	 *
+	 * @return string
+	 */
+	public function get_view_url()
+	{
+		return Route::url('code_single', array(
+			'id' => $this->id,
+			'slug' => $this->slug_title
+		));
 	}
 }
 

@@ -15,6 +15,8 @@ class Controller_Code_Single extends Controller_Site {
 	 */
 	public function before()
 	{
+		parent::before();
+		
 		if (defined('MARKDOWN_PARSER_CLASS'))
 		{
 			throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
@@ -25,8 +27,14 @@ class Controller_Code_Single extends Controller_Site {
 			// Load Markdown support
 			require Kohana::find_file('vendor', 'markdown/markdown');
 		}
+		
+		$this->template->styles['media/css/code.css'] = 'all';
+		$this->template->styles['media/css/shCore.css'] = 'screen';
+		$this->template->styles['media/css/shThemeKodoc.css'] = 'screen';
 
-		parent::before();
+		$this->template->scripts[] = 'media/js//code.js';
+		$this->template->scripts[] = 'media/js/shCore.js';
+		$this->template->scripts[] = 'media/js/shBrushPhp.js';
 	}
 	
 	/**
@@ -40,7 +48,7 @@ class Controller_Code_Single extends Controller_Site {
 		$this->template->title = $this->_code->title;
 		$this->view = View::factory('code/single/index');
 		
-		$this->view->title = $this->_code->title;
+		$this->view->code = $this->_code;
 		$this->view->marked_up_content = Markdown($this->_code->post_content);
 	}
 	

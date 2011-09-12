@@ -19,6 +19,26 @@ class Model_User extends Model_Auth_User {
 		'last_login' => array(),
 	);
 	
+	public function rules()
+	{
+		return array(
+			'username' => array(
+				array('not_empty'),
+				array('max_length', array(':value', 32)),
+				array('regex', array(':value', '/^[a-zA-Z0-9_]++$/')),
+				array(array($this, 'unique'), array('username', ':value')),
+			),
+			'password' => array(
+				array('not_empty'),
+			),
+			'email' => array(
+				array('not_empty'),
+				array('email'),
+				array(array($this, 'unique'), array('email', ':value')),
+			),
+		);
+	}	
+	
 	/**
 	 * Create login role for the current user
 	 *
@@ -36,5 +56,15 @@ class Model_User extends Model_Auth_User {
 		}
 		
 		return FALSE;
+	}
+	
+	/**
+	 * Returns user's profile url
+	 *
+	 * @return string
+	 */
+	public function get_profile_url()
+	{
+		return '/profile/'.$this->username;
 	}
 }

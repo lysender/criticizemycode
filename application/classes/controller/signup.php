@@ -46,8 +46,14 @@ class Controller_Signup extends Controller_Site
 		{
 			if ($this->_signup())
 			{
-				$this->session->set('signup_success_token', uniqid(mt_rand(), TRUE));
-				$this->request->redirect('/signup/success');
+				if ($this->_prev_page)
+				{
+					$this->request->redirect($this->_prev_page);
+				}
+				else
+				{
+					$this->request->redirect('/');
+				}
 			}
 		}
 		else
@@ -102,22 +108,5 @@ class Controller_Signup extends Controller_Site
 		}
 		
 		return FALSE;
-	}
-	
-	/**
-	 * Signup success page
-	 *
-	 */
-	public function action_success()
-	{
-		$this->template->title = 'Signup successfull!';
-		$this->view = View::factory('signup/success');
-		
-		$success_token = $this->session->get_once('signup_success_token');
-		
-		if ( ! $success_token)
-		{
-			$this->request->redirect('/');
-		}
 	}
 }

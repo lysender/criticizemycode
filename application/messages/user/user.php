@@ -3,7 +3,7 @@
 return array(
 	'username' => array(
 		'not_empty' => 'Username is not entered',
-		'regex' => 'Username must be composed of letters and numbers',
+		'regex' => 'Username can contain only letters, numbers or underscore',
 		'min_length' => 'Username must be at least :param2 characters',
 		'max_length' => 'Username must be at most :param2 characters',
 		'unique' => 'Username is already taken'
