@@ -82,6 +82,16 @@ Route::set('view_code', 'browse/code/<id>/<slug>', array('id' => '[0-9]++', 'slu
 	));
 
 /**
+ * Router for search
+ *
+ */
+Route::set('search', 'search(/<hash>(/<page>))', array('hash' => '[0-9a-zA-Z]++', 'page' => '[0-9]++'))
+	->defaults(array(
+		'controller' => 'search',
+		'action' => 'index'
+	));
+
+/**
  * Router for codes group of pages
  */
 Route::set('code', 'code(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))')

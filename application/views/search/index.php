@@ -9,7 +9,7 @@
 <?php endif ?>
 
 <?php if ( !empty($codes)): ?>
-	<ul id="search-results">
+	<ul id="code-post-list">
 	<?php foreach ($codes as $code): ?>
 		<li>
 			<a href="<?php echo $code->get_view_url() ?>"><?php echo HTML::chars($code->title) ?></a>
@@ -22,6 +22,8 @@
 		</li>
 	<?php endforeach ?>
 	</ul>
+<?php else: ?>
+	<p class="notice">No match found</p>
 <?php endif ?>
 
 <?php if ( ! empty($paginator)): ?>

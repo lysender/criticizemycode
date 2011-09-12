@@ -1,5 +1,5 @@
 <?php if ( !empty($codes)): ?>
-	<ul id="latest-codes-main">
+	<ul id="code-post-list">
 	<?php foreach ($codes as $code): ?>
 		<li>
 			<a href="<?php echo $code->get_view_url() ?>"><?php echo HTML::chars($code->title) ?></a>

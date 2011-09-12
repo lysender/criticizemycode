@@ -158,13 +158,17 @@ body .container {
 }
 #search_keyword {
 	width: 250px;
-	margin-top: 1px;
+	height: 22px;
+	margin: 0;
+	padding: 0;
 	font-size: 1.1em;
 	font-family: Helvetica,Arial,sans-serif;
 }
 #search_submit {
 	width: 80px;
-	margin-left: 5px;
+	height: 25px;
+	margin: -1px 0 0 5px;
+	padding: 0;
 }
 /**************************************/
 /*            MAIN CONTENT            */
@@ -229,12 +233,12 @@ body .container {
 }
 
 /** Index page styles **/
-ul#latest-codes-main,
-ul#latest-codes-main ul {
+#code-post-list,
+#code-post-list ul {
 	list-style-type: none;
 	margin-left: 0 !important;
 }
-ul#latest-codes-main > li > a{
+#code-post-list > li > a{
 	font-size: 1.4em;
 }
 

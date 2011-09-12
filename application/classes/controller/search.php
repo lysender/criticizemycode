@@ -2,8 +2,18 @@
 
 class Controller_Search extends Controller_Site {
 	
+	/**
+	 * Keyword used for searching
+	 *
+	 * @var string
+	 */
 	protected $_keyword;
 	
+	/**
+	 * Hash used for search validation
+	 * 
+	 * @var string
+	 */
 	protected $_hash;
 	
 	/**
@@ -14,59 +24,7 @@ class Controller_Search extends Controller_Site {
 	{
 		parent::before();
 		
-		if ($this->request->method() === Request::POST)
-		{
-			$this->_check_post_request();
-		}
-		else
-		{
-			$this->_check_get_request();
-		}
-	}
-	
-	/**
-	 * Checks for a valid post request
-	 *
-	 */
-	protected function _check_post_request()
-	{
-		$this->_keyword = trim($this->request->post('search_keyword'));
-		$invalid = FALSE;
-		
-		if (strlen($this->_keyword) < 5)
-		{
-			$this->session->set('error_message', 'Search keyword too short, it must be at least 5 characters');
-			$invalid = TRUE;
-		}
-		
-		if ($this->request->post('csrf') !== $this->_old_token)
-		{
-			$this->session->set('error_message', 'Invalid search request');
-			$invalid = TRUE;
-		}
-		
-		if ($invalid)
-		{
-			if ($this->_prev_page)
-			{
-				var_dump($this->_prev_page);
-				exit;
-				$this->request->redirect($this->_prev_page);
-			}
-			else
-			{
-				$this->request->redirect('/');
-			}
-		}
-		
-		// Build the pre-approved search hash
-		$hash = hash_hmac('sha256', $this->_keyword, uniqid());
-		$this->session->set('search_hash', $hash);
-		$this->session->set('search_keyword', $this->_keyword);
-		
-		$url = URL::site('/search').'?hash='.$hash.'&keyword='.urlencode($this->_keyword);
-		
-		$this->request->redirect($url);
+		$this->_check_get_request();
 	}
 	
 	/**
@@ -85,10 +43,7 @@ class Controller_Search extends Controller_Site {
 			$invalid = TRUE;
 		}
 		
-		if (
-			$this->_keyword !== $this->request->query('keyword') ||
-			$this->_hash !== $this->request->query('hash')
-		   )
+		if ($this->_hash !== $this->request->param('hash'))
 		{
 			$invalid = TRUE;
 		}
@@ -122,16 +77,17 @@ class Controller_Search extends Controller_Site {
 		
 		// Pagination
 		$paginate = new Paginate;
+		$base = Route::url('search', array('hash' => $this->_hash));
 		
 		$this->view->paginator = $paginate->render(
-			'/browse',
-			('/browse/page/'),
-			$count = $code->count_all(),
+			$base,
+			("$base/"),
+			$count = $code->get_total_searched($this->_keyword),
 			Model_Code::CODES_PER_PAGE,
 			$page = $this->request->param('page', 1)
 		);
 		
 		// Set codes to view
-		$codes = $code->get_paged($count, $page);
+		$codes = $code->get_paged_search($count, $this->_keyword, $page)->as_array();
 	}
 }

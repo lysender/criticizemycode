@@ -166,5 +166,55 @@ class Model_Code extends ORM {
 			->order_by('date_posted', 'DESC')
 			->find_all();
 	}
+	
+	/**
+	 * Returns the total number of records that match the
+	 * searched keyword
+	 *
+	 * @param string $keyword
+	 * @return int
+	 */
+	public function get_total_searched($keyword)
+	{
+		return ORM::factory('code')
+			->where('title', 'LIKE', "%$keyword%")
+			->count_all();
+	}
+	
+	/**
+	 * Returns the records that matched the search keyword
+	 *
+	 * @param int $total
+	 * @param string $keyword
+	 * @param int $page
+	 * @return array
+	 */
+	public function get_paged_search($total, $keyword, $page = 1)
+	{
+		$page = (int) $page;
+		
+		// Pre calculate totals
+		$total_pages = $this->get_total_pages($total);
+		
+		// Determine the correct page
+		if ($page < 1)
+		{
+			$page = 1;
+		}
+		
+		// Make sure the page does not exceed total pages
+		if ($page > $total_pages)
+		{
+			$page = $total_pages;
+		}
+		
+		$offset = ($page - 1) * self::CODES_PER_PAGE;
+		
+		return ORM::factory('code')
+			->where('title', 'LIKE', "%$keyword%")
+			->limit(self::CODES_PER_PAGE)
+			->offset($offset)
+			->find_all();		
+	}
 }
 
