@@ -139,7 +139,7 @@ class Model_Code extends ORM {
 	 * @param string $sort
 	 * @return array
 	 */
-	public function get_paged($total, $page = 1, $sort = 'ASC')
+	public function get_paged($total, $page = 1, $sort = 'DESC')
 	{		
 		$page = (int) $page;
 		
@@ -163,7 +163,7 @@ class Model_Code extends ORM {
 		return ORM::factory('code')
 			->limit(self::CODES_PER_PAGE)
 			->offset($offset)
-			->order_by('date_posted', 'DESC')
+			->order_by('date_posted', $sort)
 			->find_all();
 	}
 	
@@ -187,9 +187,10 @@ class Model_Code extends ORM {
 	 * @param int $total
 	 * @param string $keyword
 	 * @param int $page
+	 * @param string $sort
 	 * @return array
 	 */
-	public function get_paged_search($total, $keyword, $page = 1)
+	public function get_paged_search($total, $keyword, $page = 1, $sort = 'DESC')
 	{
 		$page = (int) $page;
 		
@@ -214,6 +215,7 @@ class Model_Code extends ORM {
 			->where('title', 'LIKE', "%$keyword%")
 			->limit(self::CODES_PER_PAGE)
 			->offset($offset)
+			->order_by('date_posted', $sort)
 			->find_all();		
 	}
 }
