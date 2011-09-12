@@ -5,6 +5,8 @@
  */
 class Model_Code extends ORM {
 	
+	const CODES_PER_PAGE = 10;
+	
 	/**
 	 * Code post belons to user
 	 *
@@ -108,6 +110,61 @@ class Model_Code extends ORM {
 			'id' => $this->id,
 			'slug' => $this->slug_title
 		));
+	}
+	
+	/**
+	 * Returns the total number of pages
+	 * for a given total record count
+	 *
+	 * @param int $total
+	 * @return int
+	 */
+	public function get_total_pages($total)
+	{
+		$ret = ceil($total / self::CODES_PER_PAGE);
+		
+		if ($ret > 0)
+		{
+			return (int) $ret;
+		}
+		
+		return 1;
+	}
+	
+	/**
+	 * Returns paginated item records
+	 *
+	 * @param int $total
+	 * @param int $page
+	 * @param string $sort
+	 * @return array
+	 */
+	public function get_paged($total, $page = 1, $sort = 'ASC')
+	{		
+		$page = (int) $page;
+		
+		// Pre calculate totals
+		$total_pages = $this->get_total_pages($total);
+		
+		// Determine the correct page
+		if ($page < 1)
+		{
+			$page = 1;
+		}
+		
+		// Make sure the page does not exceed total pages
+		if ($page > $total_pages)
+		{
+			$page = $total_pages;
+		}
+		
+		$offset = ($page - 1) * self::CODES_PER_PAGE;
+		
+		return ORM::factory('code')
+			->limit(self::CODES_PER_PAGE)
+			->offset($offset)
+			->order_by('date_posted', 'DESC')
+			->find_all();
 	}
 }
 

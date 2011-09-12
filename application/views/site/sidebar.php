@@ -8,10 +8,6 @@ and what should be the right for solving a certain problem.</p>
 
 <p>Fear not to show your code!</p>
 
-<h3>Latest codes</h3>
-
-<?php echo Request::factory('/widgets/latestcode/sidebar')->execute()->body() ?>
-
 <h3>Markdown tips</h3>
 
 <ul>
@@ -23,3 +19,7 @@ and what should be the right for solving a certain problem.</p>
 	<li>For lists, use asterisk in front of text <code>( * )</code></li>
 	<li>For headings, use # symbol in front of text, the number of # symbol is equal to the heading level</li>
 </ul>
+
+<h3>Latest codes</h3>
+
+<?php echo Request::factory('/widgets/latestcode/sidebar')->execute()->body() ?>

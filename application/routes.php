@@ -63,7 +63,7 @@ Route::set('security', 'security(/<controller>(/<action>(/<id>(/<param2>(/<param
  * Router for browsing codes and supports pagination
  *
  */
-Route::set('browse_code', 'browse(/<action>(/<page>))', array('action' => 'page', 'page' => '[0-9]++'))
+Route::set('browse_code', 'browse(/<label>(/<page>))', array('label' => 'page', 'page' => '[0-9]++'))
 	->defaults(array(
 		'controller' => 'browse',
 		'action' => 'index',

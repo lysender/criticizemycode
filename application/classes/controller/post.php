@@ -50,6 +50,11 @@ class Controller_Post extends Controller_Site {
 			try
 			{
 				$code->create_post($this->request->post());
+				
+				// Go to the post view url
+				$this->session->set('success_message', 'Your code has been posted');
+				
+				$this->request->redirect($code->get_view_url());
 			}
 			catch (ORM_Validation_Exception $e)
 			{
