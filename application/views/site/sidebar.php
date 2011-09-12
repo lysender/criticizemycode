@@ -1,33 +1,25 @@
-<h1>This is the sidebar</h1>
+<h1>What is this all about?</h1>
 
-<p>The quick brown fox jumps over the lazy dog under the mango tree.
-The quick brown fox jumps over the lazy dog under the mango tree.</p>
+<p><strong>CriticizeMyCode.com</strong> is an online community who showcase the best, worst and
+most wicked codes ever written.</p>
 
-<h3>Last criticisms</h3>
+<p>It's ultimate goal is to tell what's the best practice, what is wrong
+and what should be the right for solving a certain problem.</p>
 
-<ul>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-</ul>
+<p>Fear not to show your code!</p>
 
-<h3>Popular codes</h3>
+<h3>Latest codes</h3>
 
-<ul>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-	<li><a href="#">This is it dude</a></li>
-</ul>
+<?php echo Request::factory('/widgets/latestcode/sidebar')->execute()->body() ?>
 
 <h3>Markdown tips</h3>
 
 <ul>
+	<li>Wrap with underscore for emphasized texts</li>
+	<li>Wrap with asterisk for bolded texts</li>
 	<li>To write codes, indent them with 4 spaces</li>
 	<li>Alternatively, you can also wrap them inside ~~~ and ~~~</li>
 	<li>For inline codes, use back ticks <code>( ` )</code>.</li>
-	<li>For lists, use asterisk <code>( * )</code></li>
+	<li>For lists, use asterisk in front of text <code>( * )</code></li>
+	<li>For headings, use # symbol in front of text, the number of # symbol is equal to the heading level</li>
 </ul>

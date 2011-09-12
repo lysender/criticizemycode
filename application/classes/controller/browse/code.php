@@ -3,7 +3,7 @@
  * Code post view page
  *
  */
-class Controller_Code_Single extends Controller_Site {
+class Controller_Browse_Code extends Controller_Site {
 	
 	/**
 	 * @var Model_Code
@@ -46,7 +46,7 @@ class Controller_Code_Single extends Controller_Site {
 		$this->_check_request();
 		
 		$this->template->title = $this->_code->title;
-		$this->view = View::factory('code/single/index');
+		$this->view = View::factory('browse/code/index');
 		
 		$this->view->code = $this->_code;
 		$this->view->marked_up_content = Markdown($this->_code->post_content);

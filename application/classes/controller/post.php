@@ -3,7 +3,7 @@
  * Post a code
  *
  */
-class Controller_Code_Post extends Controller_Site {
+class Controller_Post extends Controller_Site {
 	
 	/**
 	 * @var boolean
@@ -18,7 +18,7 @@ class Controller_Code_Post extends Controller_Site {
 	{
 		$this->template->title = 'Post';
 		$this->template->styles['media/css/post.css'] = 'screen, projection';
-		$this->view = View::factory('code/post/index');
+		$this->view = View::factory('post/index');
 		
 		// Assign back the posted data to form
 		$this->view->post = Arr::extract(

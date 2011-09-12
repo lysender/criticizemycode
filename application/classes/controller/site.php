@@ -131,7 +131,7 @@ abstract class Controller_Site extends Controller_Template
 		$this->template->head_readyscripts = '';
 		
 		// Set head nav selected
-		View::set_global('headnav_class', $this->_current_headnav());
+		View::set_global('head_nav', $this->_current_headnav());
 	}
 	
 	/** 
@@ -317,22 +317,41 @@ abstract class Controller_Site extends Controller_Template
 	protected function _current_headnav()
 	{
 		$stats = array(
-			'dashboard' => '',
-			'inventory' => '',
-			'sales' => '',
-			'report' => '',
-			'security' => ''
+			'index' => array(
+				'controller' => 'index',
+				'title' => 'What\'s New?',
+				'tooltip' => 'Latest stuff',
+				'class' => NULL,
+				'link' => '/',
+			),
+			'post' => array(
+				'controller' => 'post',
+				'title' => 'post code',
+				'tooltip' => 'Let it be criticized',
+				'class' => NULL,
+				'link' => '/post',
+			),
+			'browse' => array(
+				'directory' => 'browse',
+				'controller' => 'browse',
+				'title' => 'browse',
+				'tooltip' => 'See wicked codes',
+				'class' => NULL,
+				'link' => '/browse',
+			),
 		);
 		
+		$key = $this->request->controller();
 		$dir = $this->request->directory();
 		
-		if ($dir && isset($stats[$dir]))
+		if ( ! empty($dir))
 		{
-			$stats[$dir] = $this->_headnav_class;
+			$key = $dir;
 		}
-		else
+		
+		if ($key && ! empty($stats[$key]))
 		{
-			$stats['dashboard'] = $this->_headnav_class;
+			$stats[$key]['class'] = $this->_headnav_class;
 		}
 		
 		return $stats;

@@ -60,13 +60,25 @@ Route::set('security', 'security(/<controller>(/<action>(/<id>(/<param2>(/<param
 	));
 
 /**
- * Router for code post page
+ * Router for browsing codes and supports pagination
+ *
  */
-Route::set('code_single', 'code/<id>/<slug>', array('id' => '[0-9]++', 'slug' => '[0-9a-z-_]++'))
+Route::set('browse_code', 'browse(/<action>(/<page>))', array('action' => 'page', 'page' => '[0-9]++'))
 	->defaults(array(
-		'directory'	 => 'code',
-		'controller' => 'single',
-		'action' 	 => 'index'
+		'controller' => 'browse',
+		'action' => 'index',
+		'page' => 1
+	));
+
+/**
+ * Router for browsing single code post
+ *
+ */
+Route::set('view_code', 'browse/code/<id>/<slug>', array('id' => '[0-9]++', 'slug' => '[0-9a-z-_]++'))
+	->defaults(array(
+		'directory' => 'browse',
+		'controller' => 'code',
+		'action' => 'index'
 	));
 
 /**
@@ -79,6 +91,18 @@ Route::set('code', 'code(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))'
 		'action' 	 => 'index'
 	));
 
+/**
+ * Routes for widgets
+ *
+ * Code widget
+ *
+ */
+Route::set('widgets_latestcode', 'widgets/latestcode(/<action>)')
+	->defaults(array(
+		'directory'	 => 'widgets',
+		'controller' => 'latestcode',
+		'action' 	 => 'index'
+	));
 
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of

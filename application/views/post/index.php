@@ -2,12 +2,16 @@
 
 <div id="form-wrapper">
 	<?php if ( ! empty($error_message)): ?>
-	<p class=error><?php echo $error_message ?></p>
+	<p class="error"><?php echo $error_message ?></p>
+	<?php endif ?>
+	
+	<?php if ( ! empty($success_message)): ?>
+	<p class="success"><?php echo $success_message ?></p>
 	<?php endif ?>
 	
 	<p><strong>Note:</strong> You can use <a href="#">Markdown</a> syntax to format your post. For more information, <a href="#">click here</a>.</p>
 	
-	<form action="<?php echo URL::site('/code/post') ?>" method="post" enctype="multipart/form-data">
+	<form action="<?php echo URL::site('/post') ?>" method="post" enctype="multipart/form-data">
 		<div class="span-3"><label for="title">Title</label></div>
 		<div class="span-13 last"><input type="text" name="title" id="title" value="<?php echo $post['title'] ?>" /></div>
 

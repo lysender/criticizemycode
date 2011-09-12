@@ -81,7 +81,7 @@ body .container {
 	text-align: right;
 }
 #username-span {
-	background: transparent url(/images/app-icons/user.png) no-repeat center left;
+	background: transparent url(/media/images/app-icons/user.png) no-repeat center left;
 	padding-left: 20px;
 	padding-right: 0.5em;
 }
@@ -100,7 +100,7 @@ body .container {
 /*             NAVIGATION             */
 /**************************************/
 #head-nav {
-	background: url("/images/head-navbg.png") repeat scroll 0 0 transparent;
+	background: url("/media/images/head-navbg.png") repeat scroll 0 0 transparent;
 	height: 5.26em;
 }
 #head-nav ul {
@@ -128,7 +128,7 @@ body .container {
 	text-decoration: none;
 }
 #head-nav li.selected a {
-	background:url("/images/head-navselected.gif") no-repeat scroll 0 100% transparent;	
+	background:url("/media/images/head-navselected.gif") no-repeat scroll 0 100% transparent;	
 }
 #head-nav a:hover,
 #head-nav li.selected a {
@@ -205,5 +205,16 @@ body .container {
 	width: 350px;
 	height: 52px;	
 }
+
+/** Index page styles **/
+ul#latest-codes-main,
+ul#latest-codes-main ul {
+	list-style-type: none;
+	margin-left: 0 !important;
+}
+ul#latest-codes-main > li > a{
+	font-size: 1.4em;
+}
+
 
 /** Misc styles **/

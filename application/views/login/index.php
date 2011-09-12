@@ -2,7 +2,11 @@
 
 <div id="form-wrapper">
 	<?php if ( ! empty($error_message)): ?>
-	<p class=error><?php echo $error_message ?></p>
+	<p class="error"><?php echo $error_message ?></p>
+	<?php endif ?>
+	
+	<?php if ( ! empty($success_message)): ?>
+	<p class="success"><?php echo $success_message ?></p>
 	<?php endif ?>
 	<form action="<?php echo URL::site('/login') ?>" method="post" enctype="multipart/form-data">
 		<div class="span-3"><label for="email">Username / email</label></div>

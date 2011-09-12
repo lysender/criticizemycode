@@ -104,7 +104,7 @@ class Model_Code extends ORM {
 	 */
 	public function get_view_url()
 	{
-		return Route::url('code_single', array(
+		return Route::url('view_code', array(
 			'id' => $this->id,
 			'slug' => $this->slug_title
 		));

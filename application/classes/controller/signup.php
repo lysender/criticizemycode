@@ -20,6 +20,11 @@ class Controller_Signup extends Controller_Site
 	protected $_track_page = FALSE;
 	
 	/**
+	 * @var Model_User
+	 */
+	protected $_signup_user;
+	
+	/**
 	 * Signup form page
 	 *
 	 */
@@ -46,6 +51,11 @@ class Controller_Signup extends Controller_Site
 		{
 			if ($this->_signup())
 			{
+				$this->session->set(
+					'success_message',
+					sprintf('Hi <strong>%s</strong>, your account is now ready to use', $this->_signup_user->username)
+				);
+				
 				if ($this->_prev_page)
 				{
 					$this->request->redirect($this->_prev_page);
@@ -71,29 +81,29 @@ class Controller_Signup extends Controller_Site
 	{
 		if ($this->request->post('csrf') === $this->_old_token)
 		{
-			$user = ORM::factory('user');
+			$this->_signup_user = ORM::factory('user');
 			
 			try
 			{
-				$user->create_user(
+				$this->_signup_user->create_user(
 					$this->request->post(),
 					array('username', 'email', 'password')
 				);
 				
-				if ( ! $user->loaded())
+				if ( ! $this->_signup_user->loaded())
 				{
 					throw new Exception('User is not properly loaded during signup');
 				}
 				
 				// Create login role for this user
-				if ( ! $user->create_login_role())
+				if ( ! $this->_signup_user->create_login_role())
 				{
 					throw new Exception('User has not been granted with login role during signup');
 				}
 				
 				// Force login the user
 				$auth = Auth::instance();
-				$auth->force_login($user);
+				$auth->force_login($this->_signup_user);
 				
 				return TRUE;
 			}
