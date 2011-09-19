@@ -356,4 +356,73 @@ abstract class Controller_Site extends Controller_Template
 		
 		return $stats;
 	}
+	
+	/**
+	 * Redirects to a page with a message for errors
+	 *
+	 * @param string $message
+	 * @param string $uri
+	 * @return void
+	 */
+	protected function _redirect_error($message, $uri = NULL)
+	{
+		$this->_site_redirect('error', $message, $uri);
+	}
+	
+	/**
+	 * Redirects to a page with a message for success
+	 *
+	 * @param string $message
+	 * @param string $uri
+	 * @return void
+	 */
+	protected function _redirect_success($message, $uri = NULL)
+	{
+		$this->_site_redirect('success', $message, $uri);
+	}
+	
+	/**
+	 * Redirects to a previous page without
+	 *
+	 * @return void
+	 */
+	protected function _redirect_previous()
+	{
+		$this->_site_redirect(NULL, NULL, NULL);
+	}
+	
+	/**
+	 * Redirects to a page with ability to bring a message
+	 * When $uri is null and there is a previously tracked page,
+	 *   it redirects to the page instead
+	 *
+	 * @param string $type
+	 * @param string $message
+	 * @param string $uri
+	 * @throws Exception
+	 * @return void
+	 */
+	protected function _site_redirect($type = NULL, $message = NULL, $uri = NULL)
+	{
+		$location = '/';
+		
+		if ($uri === NULL)
+		{
+			if ($this->_prev_page)
+			{
+				$location = $this->_prev_page;
+			}
+		}
+		else
+		{
+			$location = $uri;
+		}
+		
+		if ($type && $message && in_array($type, array('error', 'success')))
+		{
+			$this->session->set($type.'_message', $message);
+		}
+		
+		$this->request->redirect($location);
+	}
 }

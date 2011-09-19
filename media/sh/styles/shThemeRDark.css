@@ -15,7 +15,10 @@
  * Dual licensed under the MIT and GPL licenses.
  */
 .md-content pre {
-  background-color: rgb(27, 36, 38) !important;
+  background-color: #1b2426 !important;
+}
+.md-content pre code {
+  color: #b9bdb6;
 }
 .syntaxhighlighter {
   background-color: #1b2426 !important;

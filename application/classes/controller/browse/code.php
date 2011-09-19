@@ -10,6 +10,11 @@ class Controller_Browse_Code extends Controller_Site {
 	 */
 	protected $_code;
 	
+	/**
+	 * @var boolean
+	 */
+	protected $_user_can_edit = FALSE;
+	
 	/** 
 	 * Initialize markdown environment
 	 */
@@ -50,6 +55,7 @@ class Controller_Browse_Code extends Controller_Site {
 		$this->template->scripts[] = 'media/sh/scripts/shBrush'.$this->_code->language->name.'.js';
 		
 		$this->view->code = $this->_code;
+		$this->view->user_can_edit = $this->_user_can_edit;
 		
 		$purifier = new Purifier_Post;
 		$this->view->marked_up_content = $purifier->purify(Markdown($this->_code->post_content));
@@ -79,6 +85,15 @@ class Controller_Browse_Code extends Controller_Site {
 		{
 			$this->session->set('error_message', 'Code post not found');
 			$this->request->redirect('/');
+		}
+		
+		// Check if the current user can edit the post
+		if ($user = $this->auth->get_user())
+		{
+			if ($this->_code->user && $this->_code->user->id == $user->id)
+			{
+				$this->_user_can_edit = TRUE;
+			}
 		}
 	}
 }

@@ -105,6 +105,17 @@ class Model_Code extends ORM {
 	}
 	
 	/**
+	 * Updates the code post
+	 *
+	 */
+	public function update(Validation $validation = NULL)
+	{
+		$this->date_modified = time();
+		
+		return parent::update($validation);
+	}
+	
+	/**
 	 * Returns the absolute URL for viewing a code post
 	 *
 	 * @return string
@@ -114,6 +125,25 @@ class Model_Code extends ORM {
 		return Route::url('view_code', array(
 			'id' => $this->id,
 			'slug' => $this->slug_title
+		));
+	}
+	
+	/**
+	 * Returns the url for editing the code post
+	 *
+	 * @return string
+	 */
+	public function get_edit_url()
+	{
+		if ( ! $this->loaded())
+		{
+			throw new Exception('Code model must be loaded first before it can generate urls');
+		}
+		
+		return Route::url('default', array(
+			'controller' => 'post',
+			'action' => 'edit',
+			'id' => $this->id
 		));
 	}
 	
