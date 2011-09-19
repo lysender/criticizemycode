@@ -16,12 +16,17 @@ class Model_Code extends ORM {
 		'user' => array(
 			'model' => 'user',
 			'foreign_key' => 'user_id'
+		),
+		'language' => array(
+			'model' => 'language',
+			'foreign_key' => 'language_id'
 		)
 	);
 	
 	protected $_table_columns = array(
 		'id' => array(),
 		'user_id' => array(),
+		'language_id' => array(),
 		'title' => array(),
 		'slug_title' => array(),
 		'post_content' => array(),
@@ -85,7 +90,7 @@ class Model_Code extends ORM {
 			$this->slug_title = self::generate_slug($values['title']);
 		}
 		
-		$this->values($values, array('title', 'post_content'));
+		$this->values($values, array('title', 'post_content', 'language_id'));
 		
 		$this->user = Auth::instance()->get_user();
 		

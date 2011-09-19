@@ -29,12 +29,11 @@ class Controller_Browse_Code extends Controller_Site {
 		}
 		
 		$this->template->styles['media/css/code.css'] = 'all';
-		$this->template->styles['media/css/shCore.css'] = 'screen';
-		$this->template->styles['media/css/shThemeKodoc.css'] = 'screen';
+		$this->template->styles['media/sh/styles/shCore.css'] = 'screen';
+		$this->template->styles['media/sh/styles/shThemeRDark.css'] = 'screen';
 
-		$this->template->scripts[] = 'media/js//code.js';
-		$this->template->scripts[] = 'media/js/shCore.js';
-		$this->template->scripts[] = 'media/js/shBrushPhp.js';
+		$this->template->scripts[] = 'media/js/code.js';
+		$this->template->scripts[] = 'media/sh/scripts/shCore.js';
 	}
 	
 	/**
@@ -47,6 +46,8 @@ class Controller_Browse_Code extends Controller_Site {
 		
 		$this->template->title = $this->_code->title;
 		$this->view = View::factory('browse/code/index');
+		
+		$this->template->scripts[] = 'media/sh/scripts/shBrush'.$this->_code->language->name.'.js';
 		
 		$this->view->code = $this->_code;
 		

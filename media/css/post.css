@@ -5,3 +5,7 @@
 	width: 495px;
 	height: 300px;
 }
+
+#form-wrapper #language_id {
+	width: 250px;
+}

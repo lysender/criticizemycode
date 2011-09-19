@@ -23,8 +23,25 @@ class Controller_Post extends Controller_Site {
 		// Assign back the posted data to form
 		$this->view->post = Arr::extract(
 			$this->request->post(),
-			array('title', 'post_content')
+			array('title', 'post_content', 'language_id')
 		);
+		
+		// Set default language to PHP
+		$language = ORM::factory('language');
+		
+		// Set the language options
+		$this->view->language_options = $language->get_select_options();
+		
+		if (empty($this->view->post['language_id']))
+		{
+			$language->where('name', '=', 'Php')->find();
+			
+			if ($language->loaded() && $language->name == 'Php')
+			{
+				$this->view->post['language_id'] = $language->id;
+			}
+		}
+		
 		
 		if ($this->request->method() == Request::POST)
 		{

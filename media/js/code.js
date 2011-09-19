@@ -3,7 +3,11 @@ $(document).ready(function()
 	// Syntax highlighter
 	$('pre:not(.debug) code').each(function()
 	{
-		$(this).addClass('brush: php');
+		// Get the parents identifier for language
+		var id = $(this).parents(".md-content").attr("id");
+		var lang = id.split("-").pop();
+		
+		$(this).addClass("brush: " + lang);
 	});
 
 	SyntaxHighlighter.config.tagName = 'code';
