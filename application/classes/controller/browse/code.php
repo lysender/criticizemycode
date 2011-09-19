@@ -49,7 +49,9 @@ class Controller_Browse_Code extends Controller_Site {
 		$this->view = View::factory('browse/code/index');
 		
 		$this->view->code = $this->_code;
-		$this->view->marked_up_content = Markdown($this->_code->post_content);
+		
+		$purifier = new Purifier_Post;
+		$this->view->marked_up_content = $purifier->purify(Markdown($this->_code->post_content));
 	}
 	
 	/**

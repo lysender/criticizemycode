@@ -11,13 +11,13 @@ and what should be the right for solving a certain problem.</p>
 <h3>Markdown tips</h3>
 
 <ul>
-	<li>Wrap with underscore for emphasized texts</li>
-	<li>Wrap with asterisk for bolded texts</li>
-	<li>To write codes, indent them with 4 spaces</li>
-	<li>Alternatively, you can also wrap them inside ~~~ and ~~~</li>
-	<li>For inline codes, use back ticks <code>( ` )</code>.</li>
-	<li>For lists, use asterisk in front of text <code>( * )</code></li>
-	<li>For headings, use # symbol in front of text, the number of # symbol is equal to the heading level</li>
+	<li>To write codes, indent the line with 4 spaces.</li>
+	<li>Alternatively, you can also wrap them inside <code>~~~</code> where each <code>~~~</code> is on a single line.</li>
+	<li>For inline codes, use back ticks (<code>`</code>).</li>
+	<li>Wrap with single underscore or asterisk for emphasized texts like <code>*emphasized*</code> or <code>_also emphasized_</code>.</li>
+	<li>Wrap with double underscore or asterisk for bolded texts like <code>**bolded**</code> or <code>__also bolded__</code>.</li>
+	<li>For lists, use asterisk in front of each item on a list (<code>*</code>), be sure to put a single space before the text.</li>
+	<li>For other Markdown syntax allowed, <a href="#">click here</a>.</li>
 </ul>
 
 <h3>Latest codes</h3>
