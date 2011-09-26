@@ -8,8 +8,6 @@ class Model_Code extends ORM {
 	const CODES_PER_PAGE = 10;
 	
 	/**
-	 * Code post belons to user
-	 *
 	 * @var array
 	 */
 	protected $_belongs_to = array(

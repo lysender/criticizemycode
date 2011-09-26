@@ -97,7 +97,7 @@ class Controller_Login extends Controller_Site
 	{
 		$this->auto_render = false;
 		
-		if ($this->_old_token === $this->request->param('id'))
+		if ($this->request->method() === Request::POST && $this->_old_token === $this->request->post('csrf'))
 		{
 			$this->session->set(
 				'success_message',
@@ -106,13 +106,6 @@ class Controller_Login extends Controller_Site
 			$this->auth->logout();
 		}
 		
-		if ($this->_prev_page)
-		{
-			$this->request->redirect($this->_prev_page);
-		}
-		else
-		{
-			$this->request->redirect('/');
-		}
+		$this->redirect_previous();
 	}
 }

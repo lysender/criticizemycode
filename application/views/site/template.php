@@ -79,6 +79,13 @@
 					echo '$(".csrf-field").val("'.$csrf_token.'");'."\n";
 				}
 			?>
+			
+			<?php if (isset($current_user) && $current_user): ?>
+				$("#h-logout-link").click(function(){
+					$("#logout-form").submit();
+					return false;
+				});
+			<?php endif ?>
 		});
 	})(jQuery);
 </script>

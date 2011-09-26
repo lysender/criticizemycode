@@ -27,7 +27,7 @@ class Controller_Browse_Code extends Controller_Site {
 			throw new Kohana_Exception('Markdown parser already registered. Live documentation will not work in your environment.');
 		}
 
-		if ( ! class_exists('Markdown', FALSE))
+		if ( ! defined('MARKDOWN_VERSION'))
 		{
 			// Load Markdown support
 			require Kohana::find_file('vendor', 'markdown/markdown');
@@ -59,6 +59,32 @@ class Controller_Browse_Code extends Controller_Site {
 		
 		$purifier = new Purifier_Post;
 		$this->view->marked_up_content = $purifier->purify(Markdown($this->_code->post_content));
+		
+		if ($this->auth->get_user())
+		{
+			// Set default language to Plain text
+			$language = ORM::factory('language');
+			
+			// Set the language options
+			$language_options = $language->get_select_options();
+			$language->where('name', '=', 'Plain')->find();
+			$default_language = NULL;
+			
+			if ($language->loaded() && $language->name == 'Plain')
+			{
+				$default_language = $language->id;
+			}
+			
+			$comment_post_url = Route::url('comment', array(
+				'action' => 'post',
+				'code_id' => $this->_code->id
+			));
+			$this->view->comment_form = View::factory('comment/form')
+				->set('code_id', $this->_code->id)
+				->set('language_options', $language_options)
+				->set('default_language', $default_language)
+				->set('comment_post_url', $comment_post_url);
+		}
 	}
 	
 	/**

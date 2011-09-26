@@ -1,5 +1,9 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
+/**
+ * Base for all controllers which contains several custom methods
+ * used for basic site features and request validations
+ *
+ */
 abstract class Controller_Site extends Controller_Template
 {
 	/**
@@ -55,6 +59,16 @@ abstract class Controller_Site extends Controller_Template
 	protected $_track_page = TRUE;
 	
 	/**
+	 * Whether or not the request is for ajax only
+	 * There are requests the redirects when invalid in context, in this case
+	 * ajax only requests are handled different and simply returns an error code
+	 * as header and don't redirect instead
+	 *
+	 * @var boolean
+	 */
+	protected $_ajax_only = FALSE;
+	
+	/**
 	 * @var string
 	 */
 	protected $_current_page;
@@ -79,6 +93,13 @@ abstract class Controller_Site extends Controller_Template
 	 * @var string
 	 */
 	protected $_new_token;
+	
+	/**
+	 * Whether or not to use token and renew it automatically
+	 *
+	 * @var boolean
+	 */
+	protected $_use_token = TRUE;
 	
 	/** 
 	 * Head navigation selected menu
@@ -148,12 +169,15 @@ abstract class Controller_Site extends Controller_Template
 		
 		$user = $this->auth->get_user();
 		
-		// Set the old and new csrf token
-		$this->_old_token = $this->session->get('csrf_token');
-		$this->_new_token = uniqid();
-		
-		// Set the new token to session
-		$this->session->set('csrf_token', $this->_new_token);
+		if ($this->_use_token)
+		{
+			// Set the old and new csrf token
+			$this->_old_token = $this->session->get('csrf_token');
+			$this->_new_token = uniqid();
+			
+			// Set the new token to session
+			$this->session->set('csrf_token', $this->_new_token);
+		}
 		
 		// Set username and csrf token to global view template
 		if ($this->auto_render)
@@ -179,7 +203,14 @@ abstract class Controller_Site extends Controller_Template
 		// Redirect to login for unauthenticated users
 		if ($this->_no_auth === FALSE && ! $user)
 		{
-			$this->request->redirect('/login');
+			if ($this->_ajax_only)
+			{
+				$this->send_forbidden_headers();
+			}
+			else
+			{
+				$this->request->redirect('/login');
+			}
 		}
 	}
 	
@@ -364,9 +395,9 @@ abstract class Controller_Site extends Controller_Template
 	 * @param string $uri
 	 * @return void
 	 */
-	protected function _redirect_error($message, $uri = NULL)
+	public function redirect_error($message, $uri = NULL)
 	{
-		$this->_site_redirect('error', $message, $uri);
+		$this->site_redirect('error', $message, $uri);
 	}
 	
 	/**
@@ -376,9 +407,9 @@ abstract class Controller_Site extends Controller_Template
 	 * @param string $uri
 	 * @return void
 	 */
-	protected function _redirect_success($message, $uri = NULL)
+	public function redirect_success($message, $uri = NULL)
 	{
-		$this->_site_redirect('success', $message, $uri);
+		$this->site_redirect('success', $message, $uri);
 	}
 	
 	/**
@@ -386,9 +417,9 @@ abstract class Controller_Site extends Controller_Template
 	 *
 	 * @return void
 	 */
-	protected function _redirect_previous()
+	public function redirect_previous()
 	{
-		$this->_site_redirect(NULL, NULL, NULL);
+		$this->site_redirect(NULL, NULL, NULL);
 	}
 	
 	/**
@@ -402,7 +433,7 @@ abstract class Controller_Site extends Controller_Template
 	 * @throws Exception
 	 * @return void
 	 */
-	protected function _site_redirect($type = NULL, $message = NULL, $uri = NULL)
+	public function site_redirect($type = NULL, $message = NULL, $uri = NULL)
 	{
 		$location = '/';
 		
@@ -424,5 +455,18 @@ abstract class Controller_Site extends Controller_Template
 		}
 		
 		$this->request->redirect($location);
+	}
+	
+	/**
+	 * Sends forbidden headers for requests that doesn't handle redirects
+	 * and instead must send proper headers like for ajax
+	 *
+	 * @return void
+	 */
+	public function send_forbidden_headers()
+	{
+		$this->response->status(403);
+		$this->response->send_headers();
+		exit;
 	}
 }

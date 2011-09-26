@@ -10,56 +10,6 @@ Route::set('error', 'error/<action>/<origuri>/<message>', array('action' => '[0-
 ));
 
 /**
- * Router for cron front-end
- */
-Route::set('cron', 'cron(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))')
-	->defaults(array(
-		'directory'	 => 'cron',
-		'controller' => 'index',
-		'action'     => 'index',
-	));
-
-/**
- * Router for inventory group of pages
- */
-Route::set('inventory', 'inventory(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))')
-	->defaults(array(
-		'directory'	 => 'inventory',
-		'controller' => 'index',
-		'action' 	 => 'index'
-	));
-
-/**
- * Router for sales group of pages
- */
-Route::set('sales', 'sales(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))')
-	->defaults(array(
-		'directory'	 => 'sales',
-		'controller' => 'index',
-		'action' 	 => 'index'
-	));
-
-/**
- * Router for sales group of pages
- */
-Route::set('report', 'report(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))')
-	->defaults(array(
-		'directory'	 => 'report',
-		'controller' => 'index',
-		'action' 	 => 'index'
-	));
-
-/**
- * Router for sales group of pages
- */
-Route::set('security', 'security(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))')
-	->defaults(array(
-		'directory'	 => 'security',
-		'controller' => 'index',
-		'action' 	 => 'index'
-	));
-
-/**
  * Router for browsing codes and supports pagination
  *
  */
@@ -92,13 +42,13 @@ Route::set('search', 'search(/<hash>(/<page>))', array('hash' => '[0-9a-zA-Z]++'
 	));
 
 /**
- * Router for codes group of pages
+ * Router for posting and editing comments
+ *
  */
-Route::set('code', 'code(/<controller>(/<action>(/<id>(/<param2>(/<param3>)))))')
+Route::set('comment', 'comment/<action>/<code_id>(/<comment_id>)', array('code_id' => '[0-9]++', 'comment_id' => '[0-9]++'))
 	->defaults(array(
-		'directory'	 => 'code',
-		'controller' => 'index',
-		'action' 	 => 'index'
+		'controller' => 'comment',
+		'action' => 'post'
 	));
 
 /**
@@ -111,6 +61,19 @@ Route::set('widgets_latestcode', 'widgets/latestcode(/<action>)')
 	->defaults(array(
 		'directory'	 => 'widgets',
 		'controller' => 'latestcode',
+		'action' 	 => 'index'
+	));
+
+/**
+ * Routes for widgets
+ *
+ * Comments widget
+ *
+ */
+Route::set('widgets_comment', 'widgets/comment/<code_id>')
+	->defaults(array(
+		'directory'	 => 'widgets',
+		'controller' => 'comment',
 		'action' 	 => 'index'
 	));
 

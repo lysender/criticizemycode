@@ -8,7 +8,10 @@
 		<p id="user-bar">
 			<?php if (isset($current_user)): ?>
 				<span id="username-span"><?php echo HTML::anchor('/user/'.$current_user, $current_user) ?></span>
-				<?php echo HTML::anchor('/login/logout/'.$csrf_token, '(Logout)') ?>
+				<?php echo HTML::anchor('/login/logout', '(Logout)', array('id' => 'h-logout-link')) ?>
+				<form id="logout-form" method="post" action="<?php echo URL::site('/login/logout') ?>">
+					<input type="hidden" name="csrf" class="csrf-field" />
+				</form>
 			<?php else: ?>
 				<span id="username-span">Guest</span>
 				<?php echo HTML::anchor('/login', 'Sign-in'),

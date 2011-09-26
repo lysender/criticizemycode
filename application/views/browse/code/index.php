@@ -20,7 +20,16 @@
 	<?php echo $marked_up_content ?>
 </div>
 
-<div id="post-comments">
+<div id="post-comments clearfix">
 	<h3>Comments</h3>
-	<p>This feature is comming soon...</p>
+	<?php
+		echo Request::factory('widgets/comment/'.$code->id)
+			->execute()
+			->body();
+	?>
+	<?php if (isset($current_user) && $current_user): ?>
+		<?php echo $comment_form ?>
+	<?php else: ?>
+		<p>To comment, <a href="/login"><strong>sign-in</strong></a> or <a href="/signup"><strong>sign-up</strong></a>.</p>
+	<?php endif ?>
 </div>

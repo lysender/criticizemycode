@@ -158,18 +158,18 @@ class Controller_Post extends Controller_Site {
 		$id = (int) $this->request->param('id');
 		if ( ! $id)
 		{
-			$this->_redirect_error('Invalid request');
+			$this->redirect_error('Invalid request');
 		}
 		
 		$this->_code = ORM::factory('code', $id);
 		if ( ! $this->_code->loaded())
 		{
-			$this->_redirect_error('Code post not found');
+			$this->redirect_error('Code post not found');
 		}
 		
 		if ($this->_code->user_id !== $this->auth->get_user()->id)
 		{
-			$this->_redirect_error('No permission to edit post');
+			$this->redirect_error('No permission to edit post');
 		}
 	}
 	
@@ -190,7 +190,7 @@ class Controller_Post extends Controller_Site {
 				
 				$this->_code->update();
 				
-				$this->_redirect_success('Your code has been updated', $this->_code->get_view_url());
+				$this->redirect_success('Your code has been updated', $this->_code->get_view_url());
 			}
 			catch (ORM_Validation_Exception $e)
 			{

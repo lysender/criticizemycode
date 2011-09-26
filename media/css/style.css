@@ -232,6 +232,37 @@ body .container {
 	height: 52px;	
 }
 
+/** Comment form styles **/
+#code-comment-form #comment {
+	width: 450px;
+	height: 100px;
+}
+#code-comment-form #language_id {
+	width: 250px;
+}
+#comment-messaging {
+	padding: 0;
+	margin: 0;
+	width: 458px;
+}
+#comment-messaging .error,
+#comment-messaging .success {
+	display: none;
+	margin-top: 10px;
+}
+#post-comment-w {
+	margin-bottom: 10px;
+}
+#post-comment-w .comment-w {
+	padding: 5px;
+	padding-top: 10px;
+	margin-top: 10px;
+	border-top: dotted 1px #ddd;
+	background-color: #F7F4F4;
+}
+#post-comment-w .comment-author {
+	text-align: right;
+}
 /** Index page styles **/
 #code-post-list,
 #code-post-list ul {
@@ -244,3 +275,6 @@ body .container {
 
 
 /** Misc styles **/
+img.ajax-spinner {
+	display: none;
+}
