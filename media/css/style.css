@@ -29,28 +29,26 @@ body {
 body .container {
 	color: #444444;
 }
-#header a,
+header a,
 #content a,
-#footer a {
+footer a {
 	text-decoration: none;
 }
 
 /**************************************/
 /*              HEADER                */
 /**************************************/
-#header {
+header {
 	background: none repeat scroll 0 0 #332C22;
 	border-bottom: 10px solid #DAD0C7;
 	padding-top: 10px;
 	width: 100%;
 }
 #head-top {
-	float: left;
-	width: 950px;
 	margin-bottom: 10px;
 }
 #head-top h1 {
-	margin: 0.5em 0;
+	margin: 0.395em 0;
 }
 #head-top h1,
 #head-top h1 a,
@@ -62,14 +60,23 @@ body .container {
 }
 #head-top h1 a {
 	text-decoration: none;
+	font-size: 0.75em;
+	line-height: 19px;
 }
 #head-top h1 span {
 	display: block;
 	font-size: 0.6em;
-	margin-top: 0.2em;
+	margin-top: 0.;
 	float: left;
 	width: 470px;
 	color: #BBAA99;
+	font-weight: lighter;
+	font-variant: small-caps;
+	letter-spacing: 1px;
+	text-transform: lowercase;
+	padding: 0 2px;
+	font-size: 0.495em;
+	line-height: 16px;
 }
 #user-bar {
 	float: left;
@@ -101,13 +108,13 @@ body .container {
 /**************************************/
 #head-nav {
 	background: url("/media/images/head-navbg.png") repeat scroll 0 0 transparent;
-	height: 5.26em;
+	height: 3.7em;
 }
 #head-nav ul {
 	padding: 5px 0 0 0;
 	margin: 0;
 	float: left;
-	width: 950px;
+	width: 940px;
 	list-style-type: none;
 }
 #head-nav li {
@@ -136,7 +143,7 @@ body .container {
 }
 #head-nav a strong {
 	display: block;
-	font-size: 1.2em;
+	font-size: 1.1em;
 	color: #ba9;
 }
 #head-nav a:hover strong,
@@ -150,7 +157,7 @@ body .container {
 #search-bar {
 	position: absolute;
 	margin-left: 500px;
-	margin-top: 15px;
+	margin-top: 12px;
 }
 #search-bar input {
 	float: left;
@@ -179,9 +186,9 @@ body .container {
 	padding: 20px 0;
 }
 #main-content > h1, #side-bar > h1 {
-	font-size: 1.8em;
+	font-size: 1.7em;
 	font-weight: normal;
-	margin: 0 0 1.5em 0;
+	margin: 0 0 1em 0;
 	text-transform: none;
 }
 #form-wrapper {
@@ -189,20 +196,23 @@ body .container {
 	float: left;
 	padding-top: 1.7em;	
 }
+#side-bar {
+	
+}
 /**************************************/
 /*               FOOTER               */
 /**************************************/
-#footer {
+footer {
 	background: none repeat scroll 0 0 #EDE8E3;
 	width: 100%;
 }
-#footer a {
+footer a {
 	color: #999999;
 }
-#footer a:hover {
+footer a:hover {
 	color: #780c0c;
 }
-#footer .container {
+footer .container {
 	padding-top: 20px;
 }
 #foot_nav {
@@ -214,9 +224,10 @@ body .container {
 }
 #foot_nav li {
 	display: inline;
+	padding-left: 5px;
 }
 #foot_nav li:first-child {
-	margin-left: 0;
+	padding-left: 0;
 }
 
 /** Per page styles **/

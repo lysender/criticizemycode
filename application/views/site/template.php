@@ -1,19 +1,19 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <title><?php echo ( ! empty($title)) ? $title.' :: ' : '' ?>Criticize My Code</title>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-<meta name="robots" content="all" />
+<meta charset="utf-8">
+<meta name="robots" content="all">
 
 <?php if (isset($description) && $description): ?>
-<meta name="description" content="<?php echo $description ?>" />
+<meta name="description" content="<?php echo $description ?>">
 <?php endif ?>
 	
 <?php if (isset($keywords) && $keywords): ?>
-<meta name="keywords" content="<?php echo $keywords ?>" />
+<meta name="keywords" content="<?php echo $keywords ?>">
 <?php endif ?>
 
-<link rel="shortcut icon" href="/favicon.ico?v=<?php echo APP_VERSION ?>" />
+<link rel="shortcut icon" href="/favicon.ico?v=<?php echo APP_VERSION ?>">
 
 <!-- basic styles -->
 <?php foreach ($styles as $style => $media)
@@ -36,23 +36,25 @@
 </head>
 
 <body>
-<div id="header"><?php echo $header ?></div>
+<header><?php echo $header ?></header>
 
 <div id="content">
 	<div class="container">
-		<div id="main-content" class="span-16">
-			<?php echo $content ?>
-		</div>
-		<div id="side-bar" class="span-7 push-1 last">
-			<?php echo $sidebar ?>
+		<div class="row">
+			<div id="main-content" class="span11">
+				<?php echo $content ?>
+			</div>
+			<div id="side-bar" class="span5">
+				<?php echo $sidebar ?>
+			</div>
 		</div>
 		<div class="clear"></div>
 	</div>
 </div>
 
-<div id="footer">
+<footer class="footer">
 	<div class="container"><?php echo $footer ?></div>
-</div>
+</footer>
 
 <!-- basic scripts -->
 <?php foreach ($scripts as $script)

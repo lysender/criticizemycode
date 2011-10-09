@@ -137,7 +137,7 @@ abstract class Controller_Site extends Controller_Template
 	protected function _init_template()
 	{
 		$this->template->styles = array(
-			'media/css/screen.css'	=> 'screen, projection',
+			'media/css/bootstrap.min.css'	=> 'screen, projection',
 			'media/css/print.css'	=> 'print',
 			'media/css/style.css'	=> 'screen, projection',
 			'media/css/crud.css'	=> 'screen, projection'
