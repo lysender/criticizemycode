@@ -1,24 +1,48 @@
 <h1>Login</h1>
 
 <div id="form-wrapper">
-	<?php if ( ! empty($error_message)): ?>
-	<p class="error"><?php echo $error_message ?></p>
-	<?php endif ?>
 	
-	<?php if ( ! empty($success_message)): ?>
-	<p class="success"><?php echo $success_message ?></p>
-	<?php endif ?>
+	<?php echo View::factory('site/messages')
+		->bind('error_message', $error_message)
+		->bind('success_message', $success_message)
+		->bind('warning_message', $warning_message)
+	?>
+	
 	<form action="<?php echo URL::site('/login') ?>" method="post" enctype="multipart/form-data">
-		<div class="span-3"><label for="email">Username / email</label></div>
-		<div class="span-12"><input type="text" name="email" id="email" value="<?php echo $login['email'] ?>" /></div>
-		
-		<div class="span-3"><label for="password">Password</label></div>
-		<div class="span-12"><input type="password" name="password" id="password" value="<?php echo $login['password'] ?>" /></div>
-
-		<div class="span-3">&nbsp;</div>
-		<div class="span-12"><label><input type="checkbox" name="remember" id="remember" value="1" <?php echo (!empty($login['remember']) ? 'checked="checked" ' : '') ?> /> Remember me</label></div>
-		
-		<div class="span-3">&nbsp; <input type="hidden" name="csrf" id="csrf" class="csrf-field" /></div>
-		<div class="span-12"><?php echo Form::submit('submit', 'Login') ?></div>
+		<fieldset>
+			<div class="clearfix">
+				<label for="email">Username / email</label>
+				<div class="input">
+					<input class="xlarge" type="text" name="email" id="email" value="<?php echo $login['email'] ?>" />
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<label for="password">Password</label>
+				<div class="input">
+					<input class="xlarge" type="password" name="password" id="password" />
+				</div>
+			</div>
+	
+			<div class="clearfix">
+				<div class="input">
+					<ul class="inputs-list">
+						<li>
+							<label>
+								<input type="checkbox" name="remember" id="remember" value="1" <?php echo (!empty($login['remember']) ? 'checked="checked" ' : '') ?> />
+								<span>Remember me</span>
+							</label>
+						</li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="clearfix">
+				<div class="input">
+					<input class="btn primary" type="submit" name="submit" id="submit" value="Login" />
+					<input type="hidden" name="csrf" id="csrf" class="csrf-field" />
+				</div>
+			</div>
+		</fieldset>
 	</form>
 </div>

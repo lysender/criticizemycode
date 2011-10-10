@@ -43,6 +43,11 @@ abstract class Controller_Site extends Controller_Template
 	 */
 	public $session;
 	
+	/**
+	 * @var Form_Error
+	 */
+	public $form_error;
+	
 	/** 
 	 * Whether or not the user is required to be authenticated or not
 	 * 
@@ -128,6 +133,9 @@ abstract class Controller_Site extends Controller_Template
 		
 		// Initialize flash messages
 		$this->_init_messages();
+		
+		// Initialize form error object
+		$this->form_error = new Form_Error;
 	}
 
 	/** 
@@ -144,7 +152,8 @@ abstract class Controller_Site extends Controller_Template
 		);
 
 		$this->template->scripts = array(
-			'media/js/jquery-1.4.4.min.js'
+			'media/js/jquery-1.4.4.min.js',
+			'media/bootstrap/js/bootstrap-alerts.js'
 		);
 		
 		// Initialize head_scripts and head_readyscripts
@@ -305,7 +314,7 @@ abstract class Controller_Site extends Controller_Template
 				$first_error = current($error_keys);
 				
 				$this->view->error_message = implode('<br />', $error);
-			
+				
 				if ($focus === TRUE)
 				{
 					$this->_page_setfocus($first_error);

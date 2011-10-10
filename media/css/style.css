@@ -1,25 +1,4 @@
-/*************************************
-   WELCOME TO THE CUSTOM STYLESHEET
---------------------------------------
-              style.css
-        BlueTrip CSS Framework
-    Put your custom styles in here.
-***************************************/
-
-/**************************************/
-/*           COLOR SCHEME             */
-/**************************************
-- black		#000
-- white		#fff
--           #
--           #
--           #
-***************************************/
-
-
-/**************************************/
-/*              GLOBALS               */
-/**************************************/
+/** Globals **/
 html {
 	background-color: #EDE8E3;
 }
@@ -35,9 +14,7 @@ footer a {
 	text-decoration: none;
 }
 
-/**************************************/
-/*              HEADER                */
-/**************************************/
+/** Header **/
 header {
 	background: none repeat scroll 0 0 #332C22;
 	border-bottom: 10px solid #DAD0C7;
@@ -231,7 +208,10 @@ footer .container {
 }
 
 /** Per page styles **/
-#form-wrapper input[type='submit'] {
+#form-wrapper {
+	width: 100%;
+}
+/*#form-wrapper input[type='submit'] {
 	padding:0.3em 0.4em 0.15em;
 }
 #form-wrapper input[type='text'],
@@ -241,7 +221,7 @@ footer .container {
 #form-wrapper textarea {
 	width: 350px;
 	height: 52px;	
-}
+}*/
 
 /** Comment form styles **/
 #code-comment-form #comment {
