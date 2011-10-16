@@ -105,7 +105,7 @@ class Controller_Post extends Controller_Site {
 			
 			try
 			{
-				$code->create_post($this->request->post());
+				$code->create_post($this->request->post(), $this->auth->get_user());
 				
 				// Go to the post view url
 				$this->session->set('success_message', 'Your code has been posted');
@@ -184,11 +184,10 @@ class Controller_Post extends Controller_Site {
 		{	
 			try
 			{
-				$this->_code->values($this->request->post(), array(
-					'title', 'post_content', 'language_id'
-				));
-				
-				$this->_code->update();
+				$this->_code->update_post(
+					$this->request->post(),
+					$this->auth->get_user()
+				);
 				
 				$this->redirect_success('Your code has been updated', $this->_code->get_view_url());
 			}
