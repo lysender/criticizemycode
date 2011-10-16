@@ -1,0 +1,3 @@
+2011-10-16 MNL
+	Changed index for table cmc.code.title from INDEX to UNIQUE
+	
