@@ -17,14 +17,21 @@ class Text extends Kohana_Text {
 	public static function generate_slug($str, $limit = NULL)
 	{
 		// Convert all to ascii first
-		$slug = UTF8::transliterate_to_ascii($str);
+		$slug = UTF8::transliterate_to_ascii(trim($str));
 		
 		// Lower case and slug style
 		$slug = strtolower($slug);
 		
-		$slug = str_replace(array(' ', '+'), array('-', 'plus'), $slug);
+		$slug = str_replace(array(' ', '+', '.'), array('-', '-plus', '-'), $slug);
 		$slug = preg_replace('/[^0-9a-zA-Z-_]/', '', $slug);
 		
-		return Text::limit_chars($slug, $limit, '');
+		if ($limit)
+		{
+			return Text::limit_chars($slug, $limit, '');
+		}
+		else
+		{
+			return $slug;
+		}
 	}
 }
