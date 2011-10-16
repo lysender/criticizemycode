@@ -13,6 +13,13 @@ class Controller_Error extends Controller_Site
 	protected $_message;
 	
 	/**
+	 * Do not track the page
+	 *
+	 * @var boolean
+	 */
+	protected $_track_page = FALSE;
+	
+	/**
 	 * Pre determine error display logic
 	 */
 	public function before()
