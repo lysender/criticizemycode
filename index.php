@@ -101,7 +101,7 @@ if ( ! defined('KOHANA_START_MEMORY'))
 // Bootstrap the application
 require APPPATH.'bootstrap'.EXT;
 
-if ( ! Kohana::$environment === Kohana::TESTING)
+if (Kohana::$environment !== Kohana::TESTING)
 {
 	/**
 	 * Execute the main request. A source of the URI can be passed, eg: $_SERVER['PATH_INFO'].

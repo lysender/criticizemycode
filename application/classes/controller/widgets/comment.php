@@ -35,7 +35,7 @@ class Controller_Widgets_Comment extends Controller {
 					->order_by('date_posted', 'ASC')
 					->find_all()
 			);
-				
+			
 			$this->request->response()->body($view);
 		}
 	}

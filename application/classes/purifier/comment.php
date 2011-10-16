@@ -5,5 +5,5 @@
  */
 class Purifier_Comment extends Purifier_Abstract {
 	
-	protected $_allowed = 'p, blockquote, pre, code, strong, em, b';
+	protected $_allowed = 'p, pre, code, strong, em, b';
 }
