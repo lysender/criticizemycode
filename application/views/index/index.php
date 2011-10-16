@@ -18,7 +18,16 @@ progress.</p>
 
 <h2>Updates</h2>
 
-<p>(2011-09-20) Last week, we have added the following features:</p>
+<p>(2011-10-16)</p>
+
+<ul>
+	<li>Fixes title being not unique</li>
+	<li>Fixes redirection when previous page is a 404 page and user logs in or signs up</li>
+	<li>Added commenting system (add only)</li>
+	<li>Added unit tests for helper classes, the extended Date and Text class</li>
+</ul>
+
+<p>(2011-09-20)</p>
 
 <ul>
 	<li>Whitelisted HTML tags via HTMLPurifier</li>
