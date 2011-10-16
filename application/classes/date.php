@@ -2,45 +2,67 @@
 
 class Date extends Kohana_Date {
 	
-	public static function extra_fuzzy_span($timestamp)
+	/**
+	 * Returns a user friendly time/date span for a given
+	 * date and a given relative time
+	 *
+	 * When relative time is not given, the current time is used
+	 *
+	 * @param  int		$timestamp
+	 * @param  int		$relative_time
+	 * @return string
+	 */
+	public static function extra_fuzzy_span($timestamp, $relative_time = NULL)
 	{
 		// Determine the difference in seconds
-		$offset = abs(time() - $timestamp);
+		if ($relative_time === NULL)
+		{
+			$relative_time = time();
+		}
+		
+		$offset = abs($relative_time - $timestamp);
 		$span = '';
 		
-		if ($offset < Kohana_Date::MINUTE)
+		if ($offset < Date::MINUTE)
 		{
-			$span = "$offset seconds ago";
+			if ($offset > 10)
+			{
+				$span = $offset.' seconds ago';
+			}
+			else
+			{
+				$span = 'just now';
+			}
 		}
-		elseif ($offset <= (Kohana_Date::MINUTE + 59))
+		elseif ($offset <= (Date::MINUTE + 59))
 		{
-			$span = "a minute ago";
+			$span = 'a minute ago';
 		}
-		elseif ($offset < Kohana_Date::HOUR)
+		elseif ($offset < Date::HOUR)
 		{
-			$span = floor($offset / Kohana_Date::MINUTE) . ' minutes ago';
+			$span = floor($offset / Date::MINUTE).' minutes ago';
 		}
-		elseif ($offset <= (Kohana_Date::HOUR * 2) - 1)
+		elseif ($offset <= (Date::HOUR * 2) - 1)
 		{
-			$span = "an hour ago";
+			$span = 'an hour ago';
 		}
-		elseif ($offset < Kohana_Date::DAY)
+		elseif ($offset < Date::DAY)
 		{
-			$span = floor($offset / Kohana_Date::HOUR) . ' hours ago';
+			$span = floor($offset / Date::HOUR).' hours ago';
 		}
-		elseif ($offset <= (Kohana_Date::DAY * 2) - 1)
+		elseif ($offset <= (Date::DAY * 2) - 1)
 		{
-			$span = "Yesterday";
+			$span = 'Yesterday';
 		}
-		elseif ($offset < Kohana_Date::WEEK)
+		elseif ($offset < Date::WEEK)
 		{
-			$span = "last " . date('l', $timestamp);
+			$span = 'last '.date('l', $timestamp);
 		}
-		elseif ($offset <= (Kohana_Date::WEEK + (Kohana_Date::HOUR * 5)))
+		elseif ($offset <= (Date::WEEK + (Date::HOUR * 5)))
 		{
-			$span = "a week ago";
+			$span = 'a week ago';
 		}
-		elseif ($offset < (Kohana_Date::MONTH * 3))
+		elseif ($offset < (Date::MONTH * 3))
 		{
 			$span = date('M j', $timestamp);
 		}
@@ -48,6 +70,7 @@ class Date extends Kohana_Date {
 		{
 			$span = date('M j, Y', $timestamp);
 		}
+		
 		return $span;
 	}
 }

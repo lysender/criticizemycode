@@ -58,7 +58,7 @@ class Controller_Widgets_Comment extends Controller {
 			$result[] = array(
 				'comment' => $purifier->purify(Markdown($comment->comment)),
 				'author' => $comment->user->username,
-				'date_posted' => Date::fuzzy_span($comment->date_posted)
+				'date_posted' => Date::extra_fuzzy_span($comment->date_posted)
 			);
 		}
 		
