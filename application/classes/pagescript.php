@@ -2,15 +2,25 @@
 /**
  * Page script helper class
  *
+ * @package  Pagescript
+ * @author   lysender
+ * @uses     HTML
  */
 class Pagescript {
 	
 	/**
-	 * Scripts run on header (actually in footer for performance)
+	 * Javascript files
 	 *
 	 * @var array
 	 */
-	protected $_script = array();
+	protected $_files = array();
+	
+	/**
+	 * Global scripts
+	 *
+	 * @var array
+	 */
+	protected $_global_script = array();
 	
 	/**
 	 * Scripts run on document ready
@@ -20,7 +30,7 @@ class Pagescript {
 	protected $_ready_script = array();
 	
 	/**
-	 * Scripts run on window.load()
+	 * Scripts that are run after document is fully loaded
 	 *
 	 * @var array
 	 */
@@ -37,6 +47,60 @@ class Pagescript {
 	 * @var Pagescript_Js
 	 */
 	protected $_js_adapter;
+	
+	/**
+	 * Suffixed to the files to reload browser cache for the
+	 * js files
+	 *
+	 * @var string
+	 */
+	protected $_cache_buster;
+	
+	/**
+	 * Sets the cache buster suffix
+	 *
+	 * @param string $str
+	 * @return Pagescript
+	 */
+	public function set_cache_buster($str)
+	{
+		$this->_cache_buster = $str;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the cache buster suffix
+	 *
+	 * @return string
+	 */
+	public function get_cache_buster()
+	{
+		return $this->_cache_buster;
+	}
+	
+	/**
+	 * Adds a js file
+	 *
+	 * @param string $file
+	 * @return Pagescript
+	 */
+	public function add_file($file)
+	{
+		$this->_files[] = $file;
+		
+		return $this;
+	}
+	
+	/**
+	 * Returns the js files array
+	 *
+	 * @return array
+	 */
+	public function get_files()
+	{
+		return $this->_files;
+	}
 	
 	/**
 	 * Returns the js adapter
@@ -67,14 +131,14 @@ class Pagescript {
 	}
 	
 	/**
-	 * Adds a js script code
+	 * Adds a global script code
 	 *
 	 * @param string $script
 	 * @return Pagescript
 	 */
-	public function add_script($script)
+	public function add_global_script($script)
 	{
-		$this->_script[] = $script;
+		$this->_global_script[] = $script;
 		
 		return $this;
 	}
@@ -106,13 +170,13 @@ class Pagescript {
 	}
 	
 	/**
-	 * Returns the header scripts as string
+	 * Returns the global scripts as string
 	 *
 	 * @return string
 	 */
-	public function get_scripts()
+	public function get_global_scripts()
 	{
-		return implode("\n", $this->_script);
+		return implode("\n", $this->_global_script);
 	}
 	
 	/**
@@ -141,12 +205,22 @@ class Pagescript {
 	 * @param string $field
 	 * @return Pagescript
 	 */
-	public function set_focus($field)
+	public function set_focus_script($field)
 	{
 		$this->_focus_script = $this->get_js_adapter()
 			->focus($field);
 		
 		return $this;
+	}
+	
+	/**
+	 * Returns the focus script
+	 *
+	 * @return string
+	 */
+	public function get_focus_script()
+	{
+		return $this->_focus_script;
 	}
 	
 	/**
@@ -158,13 +232,27 @@ class Pagescript {
 	public function get_all_scripts()
 	{
 		$contents = '';
-		
+		$ret = '';
 		$js = $this->get_js_adapter();
 		
-		$contents .= $this->get_scripts();
-		$contents .= $js->ready_script($this->get_ready_scripts());
-		$contents .= $js->deferred_script($this->get_deferred_scripts());
+		// Generate tags for the js files
+		$c = $this->get_cache_buster();
+		$files = $this->get_files();
+		
+		foreach ($files as $file)
+		{
+			$ret .= HTML::script($file.$c)."\n";
+		}
+		
+		// Add focus script to ready scripts
+		$this->add_ready_script($this->get_focus_script());
+		
+		$contents .= $this->get_global_scripts();
+		$contents .= $js->ready($this->get_ready_scripts());
+		$contents .= $js->deferred($this->get_deferred_scripts());
 			
-		return $js->script_tag($contents);
+		$ret .= $js->generate_tag($contents);
+		
+		return $ret;
 	}
 }

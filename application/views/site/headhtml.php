@@ -15,10 +15,6 @@
 <?php foreach ($styles as $style => $media): ?>
 	<?php echo HTML::style($style.'?v='.APP_VERSION, array('media' => $media)), "\n" ?>
 <?php endforeach ?>
-
-<script type="text/javascript">
-	var base_url = '<?php echo URL::site('/') ?>';
-</script>
 	
 <?php if (Kohana::$environment == Kohana::DEVELOPMENT && Kohana::$profiling): ?>
 <!-- Profiler Styles -->
