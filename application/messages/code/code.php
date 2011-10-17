@@ -18,4 +18,8 @@ return array(
 		'min_length' => 'Content must be at least :param2 characters',
 		'max_length' => 'Content must be at most :param2 characters',
 	),
+	'language_id' => array(
+		'not_empty' => 'No language is selected',
+		'valid_language' => 'No valid language is selected',
+	),
 );

@@ -14,10 +14,10 @@
  * @license
  * Dual licensed under the MIT and GPL licenses.
  */
-.md-content pre {
+.md-content-post pre {
   background-color: #1b2426 !important;
 }
-.md-content pre code {
+.md-content-post pre code {
   color: #b9bdb6;
 }
 .syntaxhighlighter {

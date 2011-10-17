@@ -100,8 +100,7 @@ class Controller_Browse_Code extends Controller_Site {
 		
 		if (empty($id) || empty($slug))
 		{
-			$this->session->set('error_message', 'Code post not found');
-			$this->request->redirect('/');
+			throw new HTTP_Exception_404('Code post not found');
 		}
 		
 		$this->_code = ORM::factory('code', array(
@@ -111,8 +110,7 @@ class Controller_Browse_Code extends Controller_Site {
 		
 		if ( ! $this->_code->loaded())
 		{
-			$this->session->set('error_message', 'Code post not found');
-			$this->request->redirect('/');
+			throw new HTTP_Exception_404('Code post not found');
 		}
 		
 		// Check if the current user can edit the post
