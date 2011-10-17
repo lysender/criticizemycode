@@ -89,9 +89,6 @@ class Model_Code extends ORM {
 				array(array($this, 'unique'), array('title', ':value'))
 			),
 			'slug_title' => array(
-				array('not_empty'),
-				array('min_length', array(':value', 5)),
-				array('max_length', array(':value', 100)),
 				array(array($this, 'unique'), array('slug_title', ':value'))
 			),
 			'post_content' => array(
@@ -102,6 +99,23 @@ class Model_Code extends ORM {
 			'language_id' => array(
 				array('not_empty'),
 				array(array($language_model, 'valid_language'), array(':value'))
+			)
+		);
+	}
+	
+	/**
+	 * Filters field values before inserting/updating to database
+	 *
+	 * @return array
+	 */
+	public function filters()
+	{
+		return array(
+			'title' => array(
+				array('trim')
+			),
+			'post_content' => array(
+				array('trim')
 			)
 		);
 	}

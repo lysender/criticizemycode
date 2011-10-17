@@ -19,6 +19,44 @@ class Model_User extends Model_Auth_User {
 		'last_login' => array(),
 	);
 	
+	/**
+	 * @var Auth
+	 */
+	protected $_auth;
+	
+	/**
+	 * Returns auth instance
+	 *
+	 * @return Auth
+	 */
+	public function get_auth()
+	{
+		if ($this->_auth === NULL)
+		{
+			$this->_auth = Auth::instance();
+		}
+		
+		return $this->_auth;
+	}
+	
+	/**
+	 * Sets the auth instance
+	 *
+	 * @param  Auth		$auth
+	 * @return Model_User
+	 */
+	public function set_auth(Auth $auth)
+	{
+		$this->_auth = $auth;
+		
+		return $this;
+	}
+	
+	/**
+	 * Rules for user model
+	 *
+	 * @return array
+	 */
 	public function rules()
 	{
 		return array(
@@ -38,6 +76,25 @@ class Model_User extends Model_Auth_User {
 			),
 		);
 	}	
+	
+	/**
+	 * Filters field values before inserting/updating to database
+	 *
+	 * @return array
+	 */
+	public function filters()
+	{
+		$auth = $this->get_auth();
+		
+		return array(
+			'username' => array(
+				array('trim')
+			),
+			'password' => array(
+				array(array($auth, 'hash'))
+			)
+		);
+	}
 	
 	/**
 	 * Create login role for the current user
