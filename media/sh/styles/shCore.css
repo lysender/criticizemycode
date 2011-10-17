@@ -56,7 +56,10 @@
   width: 100% !important;
   margin: 1em 0 1em 0 !important;
   position: relative !important;
-  overflow: auto !important;
+  /** Patch to remove vertical scroll bar on Google Chrome **/
+  overflow-x: auto !important;
+  overflow-y: hidden;
+  /** End patch **/
   font-size: 1em !important;
 }
 .syntaxhighlighter.source {

@@ -16,7 +16,7 @@
 	<?php endif ?>
 </p>
 
-<div id="md-content-<?php echo strtolower($code->language->name) ?>" class="md-content">
+<div id="md-content-<?php echo strtolower($code->language->name) ?>" class="md-content md-content-post">
 	<?php echo $marked_up_content ?>
 </div>
 

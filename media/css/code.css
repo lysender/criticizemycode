@@ -1,4 +1,4 @@
-pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; }
+pre { background: #efefef; padding: 0.4em; border: dotted 1px #ddd; overflow: auto; margin-bottom: 0.8em; }
 table th { color: #444; background: #eee; }
 table td { background: #f4f4f4; }
 	table tr.alt td { background: #fff; }
@@ -15,7 +15,7 @@ table td { background: #f4f4f4; }
 .md-content h4 small,
 .md-content h5 small,
 .md-content h6 small { font-size: 0.8em; font-weight: normal; color: #444; }
-.md-content pre { font-size: 1em; line-height: 1.4em; direction: ltr }
+.md-content pre { font-size: 1em; line-height: 1.1em; direction: ltr }
 
 .md-content div.class-list div.class { width: 50%; }
 .md-content div.class-list div.class.left { float: left; clear: both; }
