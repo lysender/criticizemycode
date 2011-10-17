@@ -40,12 +40,47 @@ class Model_Code extends ORM {
 	);
 	
 	/**
+	 * @var Model_Language
+	 */
+	protected $_language_model;
+	
+	/**
+	 * Returns the language ORM
+	 *
+	 * @return Model_Language
+	 */
+	public function get_language_model()
+	{
+		if ($this->_language_model === NULL)
+		{
+			$this->_language_model = new Model_Language;
+		}
+		
+		return $this->_language_model;
+	}
+	
+	/**
+	 * Sets the language model
+	 *
+	 * @param  Model_Language $model
+	 * @return Model_Code
+	 */
+	public function set_language_model(Model_Language $model)
+	{
+		$this->_language_model = $model;
+		
+		return $this;
+	}
+	
+	/**
 	 * Code post rules
 	 *
 	 * @return array
 	 */
 	public function rules()
 	{
+		$language_model = $this->get_language_model();
+		
 		return array(
 			'title' => array(
 				array('not_empty'),
@@ -63,6 +98,10 @@ class Model_Code extends ORM {
 				array('not_empty'),
 				array('min_length', array(':value', 50)),
 				array('max_length', array(':value', 3000))
+			),
+			'language_id' => array(
+				array('not_empty'),
+				array(array($language_model, 'valid_language'), array(':value'))
 			)
 		);
 	}
@@ -172,28 +211,6 @@ class Model_Code extends ORM {
 			'action' => 'edit',
 			'id' => $this->id
 		));
-	}
-	
-	/**
-	 * Returns true if the title already exists
-	 *
-	 * @param  string	$title
-	 * @param  int		$exclude_id
-	 * @return boolean
-	 */
-	public function title_exists($title, $exclude_id = NULL)
-	{
-		$code = new self;
-		$code->where('title', '=', $title);
-		
-		if ($exclude_id)
-		{
-			$code->where('id', '<>', (int) $exclude_id);
-		}
-		
-		$code->find();
-		
-		return $code->loaded();
 	}
 	
 	/**
