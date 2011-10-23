@@ -1,4 +1,4 @@
-<div id="foot_nav" class="span-14 prefix-5 suffix-5 last">
+<div id="foot_nav">
 	<ul>
 		<li><?php echo HTML::anchor('/manual', 'Manual') ?></li>
 		<li><?php echo HTML::anchor('/about', 'About') ?></li>
@@ -12,7 +12,7 @@
 
 <?php if (Kohana::$environment == Kohana::DEVELOPMENT && Kohana::$profiling): ?>
 <!-- Profiler stats -->
-<div id="kohana-profiler" class="span-24">
+<div id="kohana-profiler">
 	<?php echo View::factory('profiler/stats') ?>
 </div>
 <?php endif ?>

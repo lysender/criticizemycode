@@ -43,6 +43,11 @@ abstract class Controller_Site extends Controller_Template
 	 */
 	public $session;
 	
+	/**
+	 * @var Form_Error
+	 */
+	public $form_error;
+	
 	/** 
 	 * Whether or not the user is required to be authenticated or not
 	 * 
@@ -108,6 +113,41 @@ abstract class Controller_Site extends Controller_Template
 	 */
 	protected $_headnav_class = ' class="selected"';
 	
+	/**
+	 * @var Pagescript
+	 */
+	protected $_pagescript;
+	
+	/**
+	 * Returns the pagescript object
+	 *
+	 * @return Pagescript
+	 */
+	public function get_pagescript()
+	{
+		if ($this->_pagescript === NULL)
+		{
+			// Configure pagescript object
+			$this->_pagescript = new Pagescript;
+			$this->_pagescript->set_js_adapter(new Pagescript_Js_Bootstrap);
+		}
+		
+		return $this->_pagescript;
+	}
+	
+	/**
+	 * Sets the pagescript object
+	 *
+	 * @param Pagescript $pagescript
+	 * @return Controller
+	 */
+	public function set_pagescript(Pagescript $pagescript)
+	{
+		$this->_pagescript = $pagescript;
+		
+		return $this;
+	}
+	
 	/** 
 	 * before()
 	 *
@@ -128,6 +168,9 @@ abstract class Controller_Site extends Controller_Template
 		
 		// Initialize flash messages
 		$this->_init_messages();
+		
+		// Initialize form error object
+		$this->form_error = new Form_Error;
 	}
 
 	/** 
@@ -137,19 +180,23 @@ abstract class Controller_Site extends Controller_Template
 	protected function _init_template()
 	{
 		$this->template->styles = array(
-			'media/css/screen.css'	=> 'screen, projection',
+			'media/css/bootstrap.min.css'	=> 'screen, projection',
 			'media/css/print.css'	=> 'print',
 			'media/css/style.css'	=> 'screen, projection',
 			'media/css/crud.css'	=> 'screen, projection'
 		);
-
-		$this->template->scripts = array(
-			'media/js/jquery-1.4.4.min.js'
-		);
 		
-		// Initialize head_scripts and head_readyscripts
-		$this->template->head_scripts = '';
-		$this->template->head_readyscripts = '';
+		$ps = $this->get_pagescript();
+		
+		$ps->set_cache_buster('?v='.APP_VERSION)
+			->add_file('media/js/jquery-1.4.4.min.js')
+			->add_file('media/bootstrap/js/bootstrap-alerts.js')
+			->add_global_script(
+				$ps->get_js_adapter()
+					->js_var('base_url', URL::site('/'))
+			);
+		
+		$this->template->pagescript = $ps;
 		
 		// Set head nav selected
 		View::set_global('head_nav', $this->_current_headnav());
@@ -248,7 +295,29 @@ abstract class Controller_Site extends Controller_Template
 	public function after()
 	{
 		if ($this->auto_render)
-		{			
+		{
+			// Finalize scripts
+			$ps = $this->get_pagescript();
+			
+			// Add token value initialization
+			if ($this->_new_token)
+			{
+				$ps->add_ready_script('$(".csrf-field").val("'.$this->_new_token.'");');
+			}
+			
+			// Set logout script
+			if ($this->auth->get_user())
+			{
+				$ps->add_ready_script('$("#h-logout-link").click(function(){'
+					."\n".'$("#logout-form").submit();'
+					."\n".'return false;'
+					."\n".'});'
+				);
+			}
+			
+			// Set alert bootstrap
+			$ps->add_ready_script('$(".alert-message").alert();');
+			
 			// Template disyplay logic
 			$this->template->header = View::factory($this->header);
 			
@@ -259,20 +328,6 @@ abstract class Controller_Site extends Controller_Template
 		}
 
 		return parent::after();
-	}
-	
-	/** 
-	 * Sets focus to a form element
-	 * 
-	 * @param string $id
-	 * @return void
-	 */
-	protected function _page_setfocus($id)
-	{
-		if ($this->auto_render)
-		{
-			$this->template->head_readyscripts .= '$("#'.$id.'").focus();'."\n";
-		}
 	}
 	
 	/** 
@@ -305,10 +360,11 @@ abstract class Controller_Site extends Controller_Template
 				$first_error = current($error_keys);
 				
 				$this->view->error_message = implode('<br />', $error);
-			
+				
 				if ($focus === TRUE)
 				{
-					$this->_page_setfocus($first_error);
+					$this->get_pagescript()
+						->set_focus_script($first_error);
 				}
 			}
 			else
@@ -318,7 +374,8 @@ abstract class Controller_Site extends Controller_Template
 			
 			if (is_string($focus))
 			{
-				$this->_page_setfocus($focus);
+				$this->get_pagescript()
+					->set_focus_script($focus);
 			}
 		}
 	}
@@ -336,7 +393,8 @@ abstract class Controller_Site extends Controller_Template
 		{
 			$first_error = current($error_keys);
 			
-			$this->_page_setfocus($first_error);
+			$this->get_pagescript()
+				->set_focus_script($first_error);
 		}
 	}
 	

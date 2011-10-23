@@ -1,12 +1,10 @@
 <h1>Welcome! We are in our pre-beta!</h1>
 
-<?php if ( ! empty($error_message)): ?>
-<p class="error"><?php echo $error_message ?></p>
-<?php endif ?>
-
-<?php if ( ! empty($success_message)): ?>
-<p class="success"><?php echo $success_message ?></p>
-<?php endif ?>
+<?php echo View::factory('site/messages')
+	->bind('error_message', $error_message)
+	->bind('success_message', $success_message)
+	->bind('warning_message', $warning_message)
+?>
 
 <p><strong>CriticizeMyCode.com</strong> is an online code sharing, reviewing
 and criticizing site for developer's code, whether it is the best, the worst
