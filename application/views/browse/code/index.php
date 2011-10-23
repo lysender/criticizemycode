@@ -16,17 +16,19 @@
 	<?php endif ?>
 </p>
 
-<div id="md-content-<?php echo strtolower($code->language->name) ?>" class="md-content">
+<div id="md-content-<?php echo strtolower($code->language->name) ?>" class="md-content md-content-post">
 	<?php echo $marked_up_content ?>
 </div>
 
 <div id="post-comments clearfix">
 	<h3>Comments</h3>
-	<?php
-		echo Request::factory('widgets/comment/'.$code->id)
-			->execute()
-			->body();
-	?>
+	<div id="post-comment-w" class="clearfix">
+		<?php
+			echo Request::factory('widgets/comment/'.$code->id)
+				->execute()
+				->body();
+		?>
+	</div>
 	<?php if (isset($current_user) && $current_user): ?>
 		<?php echo $comment_form ?>
 	<?php else: ?>

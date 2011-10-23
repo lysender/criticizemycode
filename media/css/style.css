@@ -245,14 +245,15 @@ footer .container {
 	margin-bottom: 10px;
 }
 #post-comment-w .comment-w {
-	padding: 5px;
-	padding-top: 10px;
+	padding: 5px 5px 5px 35px;
 	margin-top: 10px;
 	border-top: dotted 1px #ddd;
-	background-color: #F7F4F4;
 }
 #post-comment-w .comment-author {
 	text-align: right;
+}
+.comment-author .comment-date {
+	color: #999;
 }
 /** Index page styles **/
 #code-post-list,

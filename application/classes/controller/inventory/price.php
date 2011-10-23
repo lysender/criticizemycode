@@ -19,7 +19,8 @@ class Controller_Inventory_Price extends Controller_Site
 		
 		$this->view = View::factory('inventory/price/index');
 		
-		$this->_page_setfocus('search_key');
+		$this->get_pagescript()
+			->set_focus_script('search_key');
 	}
 	
 	/** 

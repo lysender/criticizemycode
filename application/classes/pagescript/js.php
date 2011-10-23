@@ -2,32 +2,43 @@
 /**
  * Javascript helper class for page scripts
  *
+ * @package Pagescript
+ * @author lysender
  */
-abstract class Pagescript_Js {
+class Pagescript_Js {
 	
 	/**
 	 * Returns a js script for focusing on a certain form element
 	 *
 	 * @param string $field
-	 * @return string
+	 * @return string or NULL
 	 */
-	abstract public function focus($field);
+	public function focus($field)
+	{
+		return NULL;
+	}
 	
 	/**
 	 * Returns the ready script with contents
 	 *
 	 * @param string $contents
-	 * @return string
+	 * @return string or NULL
 	 */
-	abstract public function ready_script($contents);
+	public function ready($contents)
+	{
+		return NULL;
+	}
 	
 	/**
 	 * Returns the deferred script with contents
 	 *
 	 * @param string $contents
-	 * @return string
+	 * @return string or NULL
 	 */
-	abstract public function deferred_script($contents);
+	public function deferred($contents)
+	{
+		return NULL;
+	}
 	
 	/**
 	 * Returns the script tag with contents
@@ -35,7 +46,7 @@ abstract class Pagescript_Js {
 	 * @param string $contents
 	 * @return string
 	 */
-	public function script_tag($contents)
+	public function generate_tag($contents)
 	{
 		$s = '';
 		
@@ -43,7 +54,7 @@ abstract class Pagescript_Js {
 		{
 			$s = '<script type="text/javascript">'
 				."\n".$contents."\n"
-				.'</script>';
+				.'</script>'."\n";
 		}
 		
 		return $s;
@@ -80,7 +91,10 @@ abstract class Pagescript_Js {
 	 * Highlights the form field for errors
 	 *
 	 * @param string $field
-	 * @return string
+	 * @return string or NULL
 	 */
-	abstract public function highlight_error($field);
+	public function highlight_error($field)
+	{
+		return NULL;
+	}
 }

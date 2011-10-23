@@ -1,13 +1,11 @@
 <?php defined('SYSPATH') or die('No direct access allowed.');
 /**
- * CMC User model
+ * An extension to Kohana_Auth
  *
  */
 abstract class Auth extends Kohana_Auth {
 	
 	/**
-	 * User object
-	 *
 	 * @var Model_User
 	 */
 	protected $_user;
@@ -16,7 +14,8 @@ abstract class Auth extends Kohana_Auth {
 	 * Gets the currently logged in user from the session.
 	 * Returns NULL if no user is currently logged in.
 	 *
-	 * @return  mixed
+	 * @return mixed
+	 * @uses   Model_User
 	 */
 	public function get_user($default = NULL)
 	{
@@ -28,10 +27,8 @@ abstract class Auth extends Kohana_Auth {
 		$id = $this->_session->get($this->_config['session_key'], $default);
 		
 		if ($id)
-		{
-			$id = (int) $id;
-			
-			$user = ORM::factory('user', $id);
+		{	
+			$user = ORM::factory('user', (int) $id);
 			
 			if ($user->loaded())
 			{
@@ -42,6 +39,19 @@ abstract class Auth extends Kohana_Auth {
 		}
 		
 		return NULL;
+	}
+	
+	/**
+	 * Sets the user model
+	 *
+	 * @param  Model_User $user
+	 * @return Auth
+	 */
+	public function set_user(Model_User $user)
+	{
+		$this->_user = $user;
+		
+		return $this;
 	}
 	
 	/**

@@ -43,4 +43,18 @@ class Model_Comment extends ORM {
 			)
 		);
 	}
+	
+	/**
+	 * Filters field values before inserting/updating to database
+	 *
+	 * @return array
+	 */
+	public function filters()
+	{
+		return array(
+			'comment' => array(
+				array('trim')
+			)
+		);
+	}
 }

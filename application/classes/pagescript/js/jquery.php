@@ -2,8 +2,10 @@
 /**
  * Javascript helper class jQuery - for page scripts
  *
+ * @package Pagescript
+ * @author lysender
  */
-class Pagescript_Jquery extends Pagescript_Js {
+class Pagescript_Js_Jquery extends Pagescript_Js {
 	
 	/**
 	 * Returns a js script for focusing on a certain form element
@@ -23,7 +25,7 @@ class Pagescript_Jquery extends Pagescript_Js {
 	 * @param string $contents
 	 * @return string
 	 */
-	public function ready_script($contents)
+	public function ready($contents)
 	{
 		$s = '';
 		
@@ -34,7 +36,7 @@ class Pagescript_Jquery extends Pagescript_Js {
 				.'});';
 		}
 		
-		return $contents;
+		return $s;
 	}
 	
 	/**
@@ -43,7 +45,7 @@ class Pagescript_Jquery extends Pagescript_Js {
 	 * @param string $contents
 	 * @return string
 	 */
-	public function deferred_script($contents)
+	public function deferred($contents)
 	{
 		$s = '';
 		

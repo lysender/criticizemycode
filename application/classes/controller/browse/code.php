@@ -37,8 +37,9 @@ class Controller_Browse_Code extends Controller_Site {
 		$this->template->styles['media/sh/styles/shCore.css'] = 'screen';
 		$this->template->styles['media/sh/styles/shThemeRDark.css'] = 'screen';
 
-		$this->template->scripts[] = 'media/js/code.js';
-		$this->template->scripts[] = 'media/sh/scripts/shCore.js';
+		$this->get_pagescript()
+			->add_file('media/js/code.js')
+			->add_file('media/sh/scripts/shCore.js');
 	}
 	
 	/**
@@ -52,7 +53,8 @@ class Controller_Browse_Code extends Controller_Site {
 		$this->template->title = $this->_code->title;
 		$this->view = View::factory('browse/code/index');
 		
-		$this->template->scripts[] = 'media/sh/scripts/shBrush'.$this->_code->language->name.'.js';
+		$this->get_pagescript()
+			->add_file('media/sh/scripts/shBrush'.$this->_code->language->name.'.js');
 		
 		$this->view->code = $this->_code;
 		$this->view->user_can_edit = $this->_user_can_edit;
@@ -98,8 +100,7 @@ class Controller_Browse_Code extends Controller_Site {
 		
 		if (empty($id) || empty($slug))
 		{
-			$this->session->set('error_message', 'Code post not found');
-			$this->request->redirect('/');
+			throw new HTTP_Exception_404('Code post not found');
 		}
 		
 		$this->_code = ORM::factory('code', array(
@@ -109,8 +110,7 @@ class Controller_Browse_Code extends Controller_Site {
 		
 		if ( ! $this->_code->loaded())
 		{
-			$this->session->set('error_message', 'Code post not found');
-			$this->request->redirect('/');
+			throw new HTTP_Exception_404('Code post not found');
 		}
 		
 		// Check if the current user can edit the post

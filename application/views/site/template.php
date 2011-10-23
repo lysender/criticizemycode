@@ -31,10 +31,6 @@
 	<div class="container"><?php echo $footer ?></div>
 </footer>
 
-<?php echo View::factory('site/js')
-	->bind('scripts', $scripts)
-	->bind('head_scripts', $head_scripts)
-	->bind('head_readyscripts', $head_readyscripts)
-?>
+<?php echo $pagescript->get_all_scripts() ?>
 </body>
 </html>

@@ -5,31 +5,16 @@
  */
 class Model_Language extends ORM {
 	
+	/**
+	 * Pre-defined table columns
+	 * 
+	 * @var array
+	 */
 	protected $_table_columns = array(
 		'id' => array(),
 		'name' => array(),
 		'label' => array(),
 	);
-	
-	/**
-	 * Generates a slug based on the title of the code post
-	 *
-	 * @param string $title
-	 * @return string
-	 */
-	public static function generate_slug($title)
-	{
-		// Convert all to ascii first
-		$slug = UTF8::transliterate_to_ascii($title);
-		
-		// Lower case and slug style
-		$slug = strtolower($slug);
-		
-		$slug = str_replace(array(' ', '+'), array('-', 'plus'), $slug);
-		$slug = preg_replace('/[^0-9a-zA-Z-_]/', '', $slug);
-		
-		return Text::limit_chars($slug, 100, '');
-	}
 	
 	/**
 	 * Code post rules
@@ -73,6 +58,27 @@ class Model_Language extends ORM {
 		}
 		
 		return $options;
+	}
+	
+	/**
+	 * Returns true if the langauge id exists on the database
+	 *
+	 * @param  int		$language_id
+	 * @return boolean
+	 */
+	public function valid_language($language_id)
+	{
+		$language_id = (int) $language_id;
+		
+		if ( ! $language_id)
+		{
+			return FALSE;
+		}
+		
+		$model = new self;
+		$model->where('id', '=', $language_id)->find();
+		
+		return $model->loaded();
 	}
 }
 
