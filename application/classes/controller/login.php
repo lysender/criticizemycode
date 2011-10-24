@@ -39,10 +39,6 @@ class Controller_Login extends Controller_Site
 		{
 			if ($this->_login())
 			{
-				$this->session->set(
-					'success_message',
-					sprintf('Hi <strong>%s</strong>, you have been logged in', $this->auth->get_user()->username)
-				);
 				if ($this->_prev_page)
 				{
 					$this->request->redirect($this->_prev_page);
@@ -101,10 +97,6 @@ class Controller_Login extends Controller_Site
 		
 		if ($this->request->method() === Request::POST && $this->_old_token === $this->request->post('csrf'))
 		{
-			$this->session->set(
-				'success_message',
-				'You have been logged out'
-			);
 			$this->auth->logout();
 		}
 		

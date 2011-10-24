@@ -51,11 +51,6 @@ class Controller_Signup extends Controller_Site
 		{
 			if ($this->_signup())
 			{
-				$this->session->set(
-					'success_message',
-					sprintf('Hi <strong>%s</strong>, your account is now ready to use', $this->_signup_user->username)
-				);
-				
 				if ($this->_prev_page)
 				{
 					$this->request->redirect($this->_prev_page);
