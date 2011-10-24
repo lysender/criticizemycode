@@ -46,8 +46,7 @@ class Controller_Post extends Controller_Site {
 		}
 		else
 		{
-			$this->get_pagescript()
-				->set_focus_script('title');
+			$this->get_script()->set_focus_script('title');
 		}
 	}
 	
@@ -146,8 +145,7 @@ class Controller_Post extends Controller_Site {
 		}
 		else
 		{
-			$this->get_pagescript()
-				->set_focus_script('title');
+			$this->get_script()->set_focus_script('title');
 		}
 	}
 	

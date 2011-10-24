@@ -9,14 +9,14 @@ class Controller_Login extends Controller_Site
 	/** 
 	 * Allows no login
 	 * 
-	 * @var boolean
+	 * @var  boolean
 	 */
 	protected $_no_auth = TRUE;
 	
 	/**
 	 * Don't track page
 	 *
-	 * @var boolean
+	 * @var  boolean
 	 */
 	protected $_track_page = FALSE;
 	
@@ -55,7 +55,9 @@ class Controller_Login extends Controller_Site
 		}
 		else
 		{
-			$this->get_pagescript()->set_focus_script('email');
+			$this->get_script()->set_focus_script(
+				$this->get_script()->get_adapter()->focus('email')
+			);
 		}
 	}
 	

@@ -37,7 +37,7 @@ class Controller_Browse_Code extends Controller_Site {
 		$this->template->styles['media/sh/styles/shCore.css'] = 'screen';
 		$this->template->styles['media/sh/styles/shThemeRDark.css'] = 'screen';
 
-		$this->get_pagescript()
+		$this->get_script()
 			->add_file('media/js/code.js')
 			->add_file('media/sh/scripts/shCore.js');
 	}
@@ -53,7 +53,7 @@ class Controller_Browse_Code extends Controller_Site {
 		$this->template->title = $this->_code->title;
 		$this->view = View::factory('browse/code/index');
 		
-		$this->get_pagescript()
+		$this->get_script()
 			->add_file('media/sh/scripts/shBrush'.$this->_code->language->name.'.js');
 		
 		$this->view->code = $this->_code;

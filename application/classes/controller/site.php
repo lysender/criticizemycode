@@ -7,51 +7,51 @@
 abstract class Controller_Site extends Controller_Template
 {
 	/**
-	 * @var string
+	 * @var  string
 	 */
 	public $template = 'site/template';
 	
 	/**
-	 * @var string
+	 * @var  string
 	 */
 	public $header = 'site/header';
 	
 	/**
-	 * @var Kohana_View
+	 * @var  Kohana_View
 	 */
 	public $view;
 	
 	/**
 	 * Sidebar template
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	public $sidebar = 'site/sidebar';
 	
 	/**
-	 * @var string
+	 * @var  string
 	 */
 	public $footer = 'site/footer';
 	
 	/**
-	 * @var Auth
+	 * @var  Auth
 	 */
 	public $auth;
 	
 	/** 
-	 * @var Session
+	 * @var  Session
 	 */
 	public $session;
 	
 	/**
-	 * @var Form_Error
+	 * @var  Form_Error
 	 */
 	public $form_error;
 	
 	/** 
 	 * Whether or not the user is required to be authenticated or not
 	 * 
-	 * @var boolean
+	 * @var  boolean
 	 */
 	protected $_no_auth = TRUE;
 	
@@ -59,7 +59,7 @@ abstract class Controller_Site extends Controller_Template
 	 * Indicates whether or not to track the current page
 	 * Set this to FALSE for pages like login/signup or AJAX pages
 	 *
-	 * @var boolean
+	 * @var  boolean
 	 */
 	protected $_track_page = TRUE;
 	
@@ -69,81 +69,78 @@ abstract class Controller_Site extends Controller_Template
 	 * ajax only requests are handled different and simply returns an error code
 	 * as header and don't redirect instead
 	 *
-	 * @var boolean
+	 * @var  boolean
 	 */
 	protected $_ajax_only = FALSE;
 	
 	/**
-	 * @var string
+	 * @var  string
 	 */
 	protected $_current_page;
 	
 	/**
 	 * The previously visited page tracked
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $_prev_page;
 	
 	/**
 	 * For CSRF token - old token
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $_old_token;
 	
 	/**
 	 * For CSRF token - new token
 	 *
-	 * @var string
+	 * @var  string
 	 */
 	protected $_new_token;
 	
 	/**
 	 * Whether or not to use token and renew it automatically
 	 *
-	 * @var boolean
+	 * @var  boolean
 	 */
 	protected $_use_token = TRUE;
 	
 	/** 
 	 * Head navigation selected menu
 	 * 
-	 * @var string
+	 * @var  string
 	 */
 	protected $_headnav_class = ' class="selected"';
 	
 	/**
-	 * @var Pagescript
+	 * @var  Pagescript
 	 */
-	protected $_pagescript;
+	protected $_script;
 	
 	/**
-	 * Returns the pagescript object
-	 *
-	 * @return Pagescript
+	 * @return  Kollection_Script
 	 */
-	public function get_pagescript()
+	public function get_script()
 	{
-		if ($this->_pagescript === NULL)
+		if ($this->_script === NULL)
 		{
-			// Configure pagescript object
-			$this->_pagescript = new Pagescript;
-			$this->_pagescript->set_js_adapter(new Pagescript_Js_Bootstrap);
+			// Configure script object
+			$this->_script = new Kollection_Script(new Kollection_Script_Bootstrap);
 		}
 		
-		return $this->_pagescript;
+		return $this->_script;
 	}
 	
 	/**
 	 * Sets the pagescript object
 	 *
-	 * @param Pagescript $pagescript
-	 * @return Controller
+	 * @param    Kollection_Script	$pagescript
+	 * @return   Controller
 	 */
-	public function set_pagescript(Pagescript $pagescript)
+	public function set_script(Kollection_Script $script)
 	{
-		$this->_pagescript = $pagescript;
+		$this->_script = $script;
 		
 		return $this;
 	}
@@ -155,7 +152,7 @@ abstract class Controller_Site extends Controller_Template
 	 */
 	public function before()
 	{
-		// make sure template is initialized first
+		// Make sure template is initialized first
 		parent::before();
 
 		if ($this->auto_render)
@@ -186,17 +183,17 @@ abstract class Controller_Site extends Controller_Template
 			'media/css/crud.css'	=> 'screen, projection'
 		);
 		
-		$ps = $this->get_pagescript();
+		$script = $this->get_script();
 		
-		$ps->set_cache_buster('?v='.APP_VERSION)
-			->add_file('media/js/jquery-1.4.4.min.js')
+		$script->set_cache_buster('?v='.APP_VERSION)
+			->add_file('media/js/jquery-1.6.4.min.js')
 			->add_file('media/bootstrap/js/bootstrap-alerts.js')
 			->add_global_script(
-				$ps->get_js_adapter()
+				$script->get_adapter()
 					->js_var('base_url', URL::site('/'))
 			);
 		
-		$this->template->pagescript = $ps;
+		$this->template->script = $script;
 		
 		// Set head nav selected
 		View::set_global('head_nav', $this->_current_headnav());
@@ -297,26 +294,26 @@ abstract class Controller_Site extends Controller_Template
 		if ($this->auto_render)
 		{
 			// Finalize scripts
-			$ps = $this->get_pagescript();
+			$script = $this->get_script();
 			
 			// Add token value initialization
 			if ($this->_new_token)
 			{
-				$ps->add_ready_script('$(".csrf-field").val("'.$this->_new_token.'");');
+				$script->add_ready_script('$(".csrf-field").val("'.$this->_new_token.'");');
 			}
 			
 			// Set logout script
 			if ($this->auth->get_user())
 			{
-				$ps->add_ready_script('$("#h-logout-link").click(function(){'
-					."\n".'$("#logout-form").submit();'
-					."\n".'return false;'
-					."\n".'});'
+				$script->add_ready_script('$("#h-logout-link").click(function() {'."\n"
+					.'$("#logout-form").submit();'."\n"
+					."return false;\n"
+					."});"
 				);
 			}
 			
 			// Set alert bootstrap
-			$ps->add_ready_script('$(".alert-message").alert();');
+			$script->add_ready_script('$(".alert-message").alert();');
 			
 			// Template disyplay logic
 			$this->template->header = View::factory($this->header);
@@ -333,9 +330,9 @@ abstract class Controller_Site extends Controller_Template
 	/** 
 	 * Sets the error message to view
 	 * 
-	 * @param mixed $error
-	 * @param mixed $focus
-	 * @return void
+	 * @param   mixed	$error
+	 * @param   mixed	$focus
+	 * @return  void
 	 */
 	protected function _page_error($error, $focus = TRUE)
 	{
@@ -363,7 +360,7 @@ abstract class Controller_Site extends Controller_Template
 				
 				if ($focus === TRUE)
 				{
-					$this->get_pagescript()
+					$this->get_script()
 						->set_focus_script($first_error);
 				}
 			}
@@ -374,7 +371,7 @@ abstract class Controller_Site extends Controller_Template
 			
 			if (is_string($focus))
 			{
-				$this->get_pagescript()
+				$this->get_script()
 					->set_focus_script($focus);
 			}
 		}
@@ -383,7 +380,8 @@ abstract class Controller_Site extends Controller_Template
 	/** 
 	 * Focus to the first error from all given errors
 	 * 
-	 * @param array $errors
+	 * @param   array	$errors
+	 * @return  void
 	 */
 	protected function _first_error_focus(array $errors)
 	{
@@ -393,7 +391,7 @@ abstract class Controller_Site extends Controller_Template
 		{
 			$first_error = current($error_keys);
 			
-			$this->get_pagescript()
+			$this->get_script()
 				->set_focus_script($first_error);
 		}
 	}
@@ -401,7 +399,7 @@ abstract class Controller_Site extends Controller_Template
 	/** 
 	 * Returns the current stats for head nav
 	 * 
-	 * @return array
+	 * @return  array
 	 */
 	protected function _current_headnav()
 	{
@@ -449,9 +447,9 @@ abstract class Controller_Site extends Controller_Template
 	/**
 	 * Redirects to a page with a message for errors
 	 *
-	 * @param string $message
-	 * @param string $uri
-	 * @return void
+	 * @param   string	$message
+	 * @param   string	$uri
+	 * @return  void
 	 */
 	public function redirect_error($message, $uri = NULL)
 	{
@@ -461,9 +459,9 @@ abstract class Controller_Site extends Controller_Template
 	/**
 	 * Redirects to a page with a message for success
 	 *
-	 * @param string $message
-	 * @param string $uri
-	 * @return void
+	 * @param   string	$message
+	 * @param   string	$uri
+	 * @return  void
 	 */
 	public function redirect_success($message, $uri = NULL)
 	{
@@ -473,7 +471,7 @@ abstract class Controller_Site extends Controller_Template
 	/**
 	 * Redirects to a previous page without
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	public function redirect_previous()
 	{
@@ -485,11 +483,10 @@ abstract class Controller_Site extends Controller_Template
 	 * When $uri is null and there is a previously tracked page,
 	 *   it redirects to the page instead
 	 *
-	 * @param string $type
-	 * @param string $message
-	 * @param string $uri
-	 * @throws Exception
-	 * @return void
+	 * @param   string	$type
+	 * @param   string	$message
+	 * @param   string	$uri
+	 * @return  void
 	 */
 	public function site_redirect($type = NULL, $message = NULL, $uri = NULL)
 	{
@@ -519,7 +516,7 @@ abstract class Controller_Site extends Controller_Template
 	 * Sends forbidden headers for requests that doesn't handle redirects
 	 * and instead must send proper headers like for ajax
 	 *
-	 * @return void
+	 * @return  void
 	 */
 	public function send_forbidden_headers()
 	{

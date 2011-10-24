@@ -1,10 +1,10 @@
 $(function()
 {
 	// Syntax highlighter
-	$("pre:not(.debug) code").each(function()
+	$(".md-content-post pre:not(.debug) code").each(function()
 	{
 		// Get the parents identifier for language
-		var id = $(this).parents(".md-content").attr("id");
+		var id = $(this).parents(".md-content-post").attr("id");
 		var lang = id.split("-").pop();
 		
 		$(this).addClass("brush: " + lang);

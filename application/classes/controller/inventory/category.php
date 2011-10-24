@@ -107,8 +107,7 @@ class Controller_Inventory_Category extends Controller_Site
 		}
 		else
 		{
-			$this->get_pagescript()
-				->set_focus_script('name');
+			$this->get_script()->set_focus_script('name');
 		}
 		
 		$this->view->category = $category;
@@ -154,8 +153,7 @@ class Controller_Inventory_Category extends Controller_Site
 		}
 		else
 		{
-			$this->get_pagescript()
-				->set_focus_script('name');
+			$this->get_script()->set_focus_script('name');
 		}
 		
 		$this->view->category = $this->_category;

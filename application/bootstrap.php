@@ -74,7 +74,7 @@ define('GENERIC_SALT', '5uctzl4g1VdaZmR4opZ3SvWCXeTvwqW5');
 /**
  * Defines the version of the application
  */
-define('APP_VERSION', '0.1.0');
+define('APP_VERSION', '0.2.0-dev');
 
 /**
  * Initialize Kohana, setting the default options.
@@ -121,6 +121,7 @@ $modules = array(
 	// 'userguide'  => MODPATH.'userguide',  // User guide and API documentation
 	// 'sprig'		 => MODPATH.'sprig',		// Sprig modeling inspired by Django
 	// 'dc'		 => MODPATH.'dc'			// Dc's collection of libs
+	'kollection' => MODPATH.'kollection',	// Collections of Kohana helper classes
 );
 
 /**

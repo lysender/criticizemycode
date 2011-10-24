@@ -68,8 +68,7 @@ class Controller_Signup extends Controller_Site
 		}
 		else
 		{
-			$this->get_pagescript()
-				->set_focus_script('username');
+			$this->get_script()->set_focus_script('username');
 		}
 	}
 	
