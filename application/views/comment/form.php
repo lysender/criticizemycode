@@ -15,8 +15,12 @@
 				<input type="hidden" name="csrf" class="csrf-field" />
 				<input type="hidden" name="code_id" id="code_id" value="<?php echo $code_id ?>" />
 				<div id="comment-messaging">
-					<p class="error"></p>
-					<p class="success"></p>
+					<div class="alert-message fade in error">
+						<p></p>
+					</div>
+					<div class="alert-message fade in success">
+						<p></p>
+					</div>
 				</div>
 			</div>
 		</div>

@@ -31,6 +31,6 @@
 	<div class="container"><?php echo $footer ?></div>
 </footer>
 
-<?php echo $script->get_all_scripts() ?>
+<?php echo $script->render() ?>
 </body>
 </html>

@@ -47,6 +47,8 @@ window.CommentForm = {
 			
 			$("#comment").text("");
 		});
+		
+		return this;
 	},
 	
 	/**
@@ -70,22 +72,12 @@ window.CommentForm = {
 				if (data.hasOwnProperty("success"))
 				{
 					// Reload comments
-					CommentForm.reloadComments();
-					
-					$("#comment-messaging p.success").html("Comment has been posted").fadeIn({
-						"complete": function(){
-							CommentForm.endAjax(true);
-						}
-					});
+					CommentForm.reloadComments().createSuccessBlock("Comment has been posted");
 				}
 				else if (data.hasOwnProperty("error"))
 				{
 					// Show errors
-					$("#comment-messaging p.error").html(data.error).fadeIn({
-						"complete": function(){
-							CommentForm.endAjax(false);
-						}
-					});
+					CommentForm.createErrorBlock(data.error);
 				}
 				else
 				{
@@ -107,12 +99,7 @@ window.CommentForm = {
 	 * @returns this
 	 */
 	genericError: function() {
-		$("#comment-messaging p.error").html("There was a problem while submitting your comment, reload the page and try again")
-			.fadeIn({
-				"complete": function() {
-					CommentForm.endAjax();
-				}
-			});
+		CommentForm.createErrorBlock("There was a problem while submitting your comment, reload the page and try again");
 	},
 	
 	/**
@@ -124,7 +111,7 @@ window.CommentForm = {
 		$("img.ajax-spinner").show();
 		
 		// Hide messaging first and disable further posting
-		$("#comment-messaging p").fadeOut();
+		$("#comment-messaging .alert-message").fadeOut();
 		$("#comment-submit").attr("disabled", "disabled");
 		
 		return this;
@@ -145,5 +132,49 @@ window.CommentForm = {
 		}
 		
 		return this;
+	},
+	
+	/**
+	 * Creates success message block
+	 *
+	 * @returns this
+	 */
+	createSuccessBlock: function(msg) {
+		var html = '<div class="alert-message fade in success"><p></p></div>';
+		var msgDiv = $("#comment-messaging");
+		
+		if (msgDiv.find(".alert-message.success").length == 0)
+		{
+			msgDiv.append(html);
+		}
+		
+		msgDiv.find(".alert-message.success p").html(msg);
+		msgDiv.find(".alert-message.success").fadeIn({
+			"complete": function(){
+				CommentForm.endAjax(true);
+			}
+		});
+	},
+
+	/**
+	 * Creates error message block
+	 *
+	 * @returns this
+	 */	
+	createErrorBlock: function(msg) {
+		var html = '<div class="alert-message fade in error"><p></p></div>';
+		var msgDiv = $("#comment-messaging");
+		
+		if (msgDiv.find(".alert-message.error").length == 0)
+		{
+			msgDiv.append(html);
+		}
+		
+		msgDiv.find(".alert-message.error p").html(msg);
+		msgDiv.find(".alert-message.error").fadeIn({
+			"complete": function(){
+				CommentForm.endAjax(true);
+			}
+		});
 	}
 };
