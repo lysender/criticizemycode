@@ -51,9 +51,7 @@ class Controller_Login extends Controller_Site
 		}
 		else
 		{
-			$this->get_script()->set_focus_script(
-				$this->get_script()->get_adapter()->focus('email')
-			);
+			$this->get_script()->set_focus_script('email');
 		}
 	}
 	
