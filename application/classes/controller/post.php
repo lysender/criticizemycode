@@ -33,8 +33,8 @@ class Controller_Post extends Controller_Site {
 	 */
 	public function action_index()
 	{
-		$this->template->title = 'Post';
-		$this->template->styles['media/css/post.css'] = 'screen, projection';
+		$this->template->head->title = 'Post';
+		$this->template->head->styles[] = 'media/css/post.css';
 		$this->view = View::factory('post/index');
 		
 		// Initialize form post
@@ -46,7 +46,7 @@ class Controller_Post extends Controller_Site {
 		}
 		else
 		{
-			$this->get_script()->set_focus_script('title');
+			$this->template->javascript->script->set_focus_script('title');
 		}
 	}
 	
@@ -143,7 +143,7 @@ class Controller_Post extends Controller_Site {
 		}
 		else
 		{
-			$this->get_script()->set_focus_script('title');
+			$this->template->javascript->script->set_focus_script('title');
 		}
 	}
 	

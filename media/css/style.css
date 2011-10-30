@@ -224,6 +224,7 @@ footer .container {
 	padding: 0;
 	margin: 0;
 	width: 458px;
+	height: 52px;
 }
 #comment-messaging .error,
 #comment-messaging .success {

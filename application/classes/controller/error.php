@@ -56,9 +56,9 @@ class Controller_Error extends Controller_Site
 	 */
 	public function action_404()
 	{
-		$this->template->description = 'The requested page not found';
-		$this->template->keywords = 'not found, 404';
-		$this->template->title = 'Page not found';
+		$this->template->head->description = 'The requested page not found';
+		$this->template->head->keywords = 'not found, 404';
+		$this->template->head->title = 'Page not found';
 		
 		$this->view = View::factory('error/404')
 			->set('error_message', $this->_message)

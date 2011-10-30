@@ -301,8 +301,7 @@ abstract class Controller_Site extends Controller_Template
 				
 				if ($focus === TRUE)
 				{
-					$this->get_script()
-						->set_focus_script($first_error);
+					$this->template->javascript->script->set_focus_script($first_error);
 				}
 			}
 			else
@@ -312,8 +311,7 @@ abstract class Controller_Site extends Controller_Template
 			
 			if (is_string($focus))
 			{
-				$this->get_script()
-					->set_focus_script($focus);
+				$this->template->javascript->script->set_focus_script($focus);
 			}
 		}
 	}
@@ -332,8 +330,7 @@ abstract class Controller_Site extends Controller_Template
 		{
 			$first_error = current($error_keys);
 			
-			$this->get_script()
-				->set_focus_script($first_error);
+			$this->template->javascript->script->set_focus_script($first_error);
 		}
 	}
 	

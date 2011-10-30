@@ -72,12 +72,12 @@ window.CommentForm = {
 				if (data.hasOwnProperty("success"))
 				{
 					// Reload comments
-					CommentForm.reloadComments().createSuccessBlock("Comment has been posted");
+					CommentForm.reloadComments().showSuccessBlock("Comment has been posted");
 				}
 				else if (data.hasOwnProperty("error"))
 				{
 					// Show errors
-					CommentForm.createErrorBlock(data.error);
+					CommentForm.showErrorBlock(data.error);
 				}
 				else
 				{
@@ -99,7 +99,7 @@ window.CommentForm = {
 	 * @returns this
 	 */
 	genericError: function() {
-		CommentForm.createErrorBlock("There was a problem while submitting your comment, reload the page and try again");
+		CommentForm.showErrorBlock("There was a problem while submitting your comment, reload the page and try again");
 	},
 	
 	/**
@@ -111,7 +111,7 @@ window.CommentForm = {
 		$("img.ajax-spinner").show();
 		
 		// Hide messaging first and disable further posting
-		$("#comment-messaging .alert-message").fadeOut();
+		$("#comment-messaging .alert-message").hide();
 		$("#comment-submit").attr("disabled", "disabled");
 		
 		return this;
@@ -135,18 +135,12 @@ window.CommentForm = {
 	},
 	
 	/**
-	 * Creates success message block
+	 * Displays success message block
 	 *
 	 * @returns this
 	 */
-	createSuccessBlock: function(msg) {
-		var html = '<div class="alert-message fade in success"><p></p></div>';
+	showSuccessBlock: function(msg) {
 		var msgDiv = $("#comment-messaging");
-		
-		if (msgDiv.find(".alert-message.success").length == 0)
-		{
-			msgDiv.append(html);
-		}
 		
 		msgDiv.find(".alert-message.success p").html(msg);
 		msgDiv.find(".alert-message.success").fadeIn({
@@ -157,18 +151,12 @@ window.CommentForm = {
 	},
 
 	/**
-	 * Creates error message block
+	 * Shows error message block
 	 *
 	 * @returns this
 	 */	
-	createErrorBlock: function(msg) {
-		var html = '<div class="alert-message fade in error"><p></p></div>';
+	showErrorBlock: function(msg) {
 		var msgDiv = $("#comment-messaging");
-		
-		if (msgDiv.find(".alert-message.error").length == 0)
-		{
-			msgDiv.append(html);
-		}
 		
 		msgDiv.find(".alert-message.error p").html(msg);
 		msgDiv.find(".alert-message.error").fadeIn({

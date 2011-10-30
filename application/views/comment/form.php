@@ -14,7 +14,7 @@
 				<img src="/media/images/icons/spinner_grey.gif" class="ajax-spinner" />
 				<input type="hidden" name="csrf" class="csrf-field" />
 				<input type="hidden" name="code_id" id="code_id" value="<?php echo $code_id ?>" />
-				<div id="comment-messaging">
+				<div id="comment-messaging" class="clearfix">
 					<div class="alert-message fade in error">
 						<p></p>
 					</div>

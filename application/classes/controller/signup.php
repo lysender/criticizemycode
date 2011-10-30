@@ -38,7 +38,7 @@ class Controller_Signup extends Controller_Site
 			$this->request->redirect('/signup');
 		}
 		
-		$this->template->title = 'Signup';
+		$this->template->head->title = 'Signup';
 		$this->view = View::factory('signup/index');
 		
 		// Assign back the posted data to form except for passwords
@@ -63,7 +63,7 @@ class Controller_Signup extends Controller_Site
 		}
 		else
 		{
-			$this->get_script()->set_focus_script('username');
+			$this->template->javascript->script->set_focus_script('username');
 		}
 	}
 	

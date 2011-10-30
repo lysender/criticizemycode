@@ -7,8 +7,8 @@ class Controller_Browse extends Controller_Site
 	 */
 	public function action_index()
 	{
-		$this->template->title = 'Browse codes';
-		$this->template->styles['media/css/pagination.css'] = 'screen, projection';
+		$this->template->head->title = 'Browse codes';
+		$this->template->head->styles[] = 'media/css/pagination.css';
 		$this->view = View::factory('browse/index')
 			->bind('codes', $codes);
 		

@@ -33,12 +33,11 @@ class Controller_Browse_Code extends Controller_Site {
 			require Kohana::find_file('vendor', 'markdown/markdown');
 		}
 		
-		$this->template->styles['media/css/code.css'] = 'all';
-		$this->template->styles['media/sh/styles/shCore.css'] = 'screen';
-		$this->template->styles['media/sh/styles/shThemeRDark.css'] = 'screen';
+		$this->template->head->styles[] = 'media/css/code.css';
+		$this->template->head->styles[] = 'media/sh/styles/shCore.css';
+		$this->template->head->styles[] = 'media/sh/styles/shThemeRDark.css';
 
-		$this->get_script()
-			->add_file('media/js/code.js')
+		$this->template->javascript->script->add_file('media/js/code.js')
 			->add_file('media/sh/scripts/shCore.js');
 	}
 	
@@ -50,11 +49,10 @@ class Controller_Browse_Code extends Controller_Site {
 	{
 		$this->_check_request();
 		
-		$this->template->title = $this->_code->title;
+		$this->template->head->title = $this->_code->title;
 		$this->view = View::factory('browse/code/index');
 		
-		$this->get_script()
-			->add_file('media/sh/scripts/shBrush'.$this->_code->language->name.'.js');
+		$this->template->javascript->script->add_file('media/sh/scripts/shBrush'.$this->_code->language->name.'.js');
 		
 		$this->view->code = $this->_code;
 		$this->view->user_can_edit = $this->_user_can_edit;

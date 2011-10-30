@@ -26,7 +26,7 @@ class Controller_Login extends Controller_Site
 	 */
 	public function action_index()
 	{
-		$this->template->title = 'Login';
+		$this->template->head->title = 'Login';
 		$this->view = View::factory('login/index');
 		
 		// Assign back the posted credentials to form except for password
@@ -51,7 +51,7 @@ class Controller_Login extends Controller_Site
 		}
 		else
 		{
-			$this->get_script()->set_focus_script('email');
+			$this->template->javascript->script->set_focus_script('email');
 		}
 	}
 	
