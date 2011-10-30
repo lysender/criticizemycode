@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-<?php echo View::factory('site/headhtml')
-	->bind('title', $title)
-	->bind('description', $description)
-	->bind('keywords', $keywords)
-	->bind('styles', $styles)
-?>
+<?php echo $head ?>
 </head>
 
 <body>
@@ -31,6 +25,6 @@
 	<div class="container"><?php echo $footer ?></div>
 </footer>
 
-<?php echo $script->render() ?>
+<?php echo $javascript ?>
 </body>
 </html>

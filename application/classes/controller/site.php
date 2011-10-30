@@ -107,45 +107,6 @@ abstract class Controller_Site extends Controller_Template
 	protected $_use_token = TRUE;
 	
 	/** 
-	 * Head navigation selected menu
-	 * 
-	 * @var  string
-	 */
-	protected $_headnav_class = ' class="selected"';
-	
-	/**
-	 * @var  Pagescript
-	 */
-	protected $_script;
-	
-	/**
-	 * @return  Kollection_Script
-	 */
-	public function get_script()
-	{
-		if ($this->_script === NULL)
-		{
-			// Configure script object
-			$this->_script = new Kollection_Script(new Kollection_Script_Bootstrap);
-		}
-		
-		return $this->_script;
-	}
-	
-	/**
-	 * Sets the pagescript object
-	 *
-	 * @param    Kollection_Script	$pagescript
-	 * @return   Controller
-	 */
-	public function set_script(Kollection_Script $script)
-	{
-		$this->_script = $script;
-		
-		return $this;
-	}
-	
-	/** 
 	 * before()
 	 *
 	 * Called before action is called
@@ -176,27 +137,25 @@ abstract class Controller_Site extends Controller_Template
 	 */
 	protected function _init_template()
 	{
-		$this->template->styles = array(
-			'media/css/bootstrap.min.css'	=> 'screen, projection',
-			'media/css/print.css'	=> 'print',
-			'media/css/style.css'	=> 'screen, projection',
-			'media/css/crud.css'	=> 'screen, projection'
-		);
+		// Initialize all necessary views
+		$this->template->head = View::factory('site/section/fragment/head');
+		$this->template->header = View::factory('site/section/header');
+		$this->template->sidebar = View::factory('site/section/sidebar');
+		$this->template->footer = View::factory('site/section/footer');
+		$this->template->javascript = View::factory('site/section/fragment/javascript');
 		
-		$script = $this->get_script();
+		$this->template->head->styles = array();
 		
-		$script->set_cache_buster('?v='.APP_VERSION)
+		// Set required js files
+		$this->template->javascript->script = new Kollection_Script(new Kollection_Script_Bootstrap);
+		$this->template->javascript->script->set_cache_buster('?v='.APP_VERSION)
 			->add_file('media/js/jquery-1.6.4.min.js')
-			->add_file('media/bootstrap/js/bootstrap-alerts.js')
-			->add_global_script(
-				$script->get_adapter()
-					->js_var('base_url', URL::site('/'))
-			);
-		
-		$this->template->script = $script;
+			->add_file('media/bootstrap/js/bootstrap-alerts.js');
 		
 		// Set head nav selected
-		View::set_global('head_nav', $this->_current_headnav());
+		$this->template->header->nav = View::factory('site/section/fragment/nav')
+			->set('current_controller', $this->request->controller())
+			->set('current_directory', $this->request->directory());
 	}
 	
 	/** 
@@ -293,35 +252,17 @@ abstract class Controller_Site extends Controller_Template
 	{
 		if ($this->auto_render)
 		{
-			// Finalize scripts
-			$script = $this->get_script();
-			
 			// Add token value initialization
-			if ($this->_new_token)
-			{
-				$script->add_ready_script('$(".csrf-field").val("'.$this->_new_token.'");');
-			}
+			$this->template->javascript->csrf_token = $this->_new_token;
 			
 			// Set logout script
 			if ($this->auth->get_user())
 			{
-				$script->add_ready_script('$("#h-logout-link").click(function() {'."\n"
-					.'$("#logout-form").submit();'."\n"
-					."return false;\n"
-					."});"
-				);
+				$this->template->javascript->user_logged_in = TRUE;
 			}
 			
-			// Set alert bootstrap
-			$script->add_ready_script('$(".alert-message").alert();');
-			
-			// Template disyplay logic
-			$this->template->header = View::factory($this->header);
-			
+			// Set body content
 			$this->template->content = $this->view;
-			$this->template->sidebar = View::factory($this->sidebar);
-			
-			$this->template->footer = View::factory($this->footer);			
 		}
 
 		return parent::after();
@@ -394,54 +335,6 @@ abstract class Controller_Site extends Controller_Template
 			$this->get_script()
 				->set_focus_script($first_error);
 		}
-	}
-	
-	/** 
-	 * Returns the current stats for head nav
-	 * 
-	 * @return  array
-	 */
-	protected function _current_headnav()
-	{
-		$stats = array(
-			'index' => array(
-				'controller' => 'index',
-				'title' => 'What\'s New?',
-				'tooltip' => 'Latest stuff',
-				'class' => NULL,
-				'link' => '/',
-			),
-			'post' => array(
-				'controller' => 'post',
-				'title' => 'post code',
-				'tooltip' => 'Let it be criticized',
-				'class' => NULL,
-				'link' => '/post',
-			),
-			'browse' => array(
-				'directory' => 'browse',
-				'controller' => 'browse',
-				'title' => 'browse',
-				'tooltip' => 'See wicked codes',
-				'class' => NULL,
-				'link' => '/browse',
-			),
-		);
-		
-		$key = $this->request->controller();
-		$dir = $this->request->directory();
-		
-		if ( ! empty($dir))
-		{
-			$key = $dir;
-		}
-		
-		if ($key && ! empty($stats[$key]))
-		{
-			$stats[$key]['class'] = $this->_headnav_class;
-		}
-		
-		return $stats;
 	}
 	
 	/**

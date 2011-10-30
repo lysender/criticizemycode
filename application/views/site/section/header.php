@@ -29,15 +29,6 @@
 				<input type="hidden" name="csrf" class="csrf-field" />
 			</form>
 		</div>
-		<ul>
-			<?php foreach ($head_nav as $index => $nav): ?>
-				<li<?php echo $nav['class'] ?>>
-					<a href="<?php echo URL::site($nav['link']) ?>">
-						<?php echo $nav['tooltip'] ?>
-						<strong><?php echo $nav['title'] ?></strong>
-					</a>
-				</li>
-			<?php endforeach ?>
-		</ul>
+		<?php echo $nav ?>
 	</div>
 </div>

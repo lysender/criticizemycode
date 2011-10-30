@@ -11,9 +11,14 @@
 
 <link rel="shortcut icon" href="/favicon.ico?v=<?php echo APP_VERSION ?>">
 
-<!-- basic styles -->
-<?php foreach ($styles as $style => $media): ?>
-	<?php echo HTML::style($style.'?v='.APP_VERSION, array('media' => $media)), "\n" ?>
+<!-- Basic styles -->
+<?php
+	echo HTML::style('media/css/bootstrap.min.css?v='.APP_VERSION)."\n",
+		HTML::style('media/css/style.css?v='.APP_VERSION)."\n",
+		HTML::style('media/css/crud.css?v='.APP_VERSION)."\n";
+?>
+<?php foreach ($styles as $style): ?>
+	<?php echo HTML::style($style.'?v='.APP_VERSION)."\n" ?>
 <?php endforeach ?>
 	
 <?php if (Kohana::$environment == Kohana::DEVELOPMENT && Kohana::$profiling): ?>
