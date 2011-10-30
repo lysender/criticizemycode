@@ -66,8 +66,8 @@ class Controller_Search extends Controller_Site {
 	 */
 	public function action_index()
 	{
-		$this->template->title = 'Search';
-		$this->template->styles['media/css/pagination.css'] = 'screen, projection';
+		$this->template->head->title = 'Search';
+		$this->template->head->styles[] = 'media/css/pagination.css';
 		$this->view = View::factory('search/index')
 			->bind('codes', $codes);
 		

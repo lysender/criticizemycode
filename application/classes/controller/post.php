@@ -127,8 +127,8 @@ class Controller_Post extends Controller_Site {
 	 */
 	public function action_edit()
 	{
-		$this->template->title = 'Edit post';
-		$this->template->styles['media/css/post.css'] = 'screen, projection';
+		$this->template->head->title = 'Edit post';
+		$this->template->head->styles[] = 'media/css/post.css';
 		$this->view = View::factory('post/edit');
 		
 		$this->_check_request();
