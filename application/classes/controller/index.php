@@ -8,6 +8,8 @@ class Controller_Index extends Controller_Site
 	public function action_index()
 	{
 		$this->template->title = 'Latest codes';
+		$this->template->hero = View::factory('index/hero');
+		
 		$this->view = View::factory('index/index');
 	}
 }
