@@ -1,9 +1,7 @@
 <h1>Join the critics and be criticized</h1>
 
 <div id="form-wrapper">
-
-	<?php echo View::factory('site/formerrors')
-		->bind('error_message', $error_message) ?>
+	<?php echo $message ?>
 
 	<form action="<?php echo URL::site('/signup') ?>" method="post" enctype="multipart/form-data">
 		<fieldset>

@@ -30,7 +30,7 @@ abstract class Purifier_Abstract {
 	 *
 	 * 	@var string
 	 */
-	protected $_allowed = 'p, blockquote, ul, li, pre, code, strong, em, b,
+	protected $_allowed = 'p, blockquote, small, ul, li, pre, code, strong, em, b,
 		table[summary], thead, tbody, tfoot, tr, th[abbr], td[abbr],
 		col, colgroup, caption';
 	

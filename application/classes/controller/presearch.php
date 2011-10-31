@@ -59,13 +59,13 @@ class Controller_Presearch extends Controller_Site {
 		
 		if (strlen($keyword) < 5)
 		{
-			$this->session->set('error_message', 'Search keyword too short, it must be at least 5 characters');
+			$this->session->set('error_message', '<strong>ERROR!</strong> Search keyword too short, it must be at least 5 characters');
 			$invalid = TRUE;
 		}
 		
 		if ($this->request->post('csrf') !== $this->_old_token)
 		{
-			$this->session->set('error_message', 'Invalid search request');
+			$this->session->set('error_message', '<strong>ERROR!</strong> Invalid search request');
 			$invalid = TRUE;
 		}
 		
@@ -83,9 +83,6 @@ class Controller_Presearch extends Controller_Site {
 		$this->request->redirect($url);
 	}
 	
-	/**
-	 * Browse codes page
-	 */
 	public function action_index()
 	{
 		

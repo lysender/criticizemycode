@@ -63,7 +63,7 @@ class Controller_Signup extends Controller_Site
 		}
 		else
 		{
-			$this->template->javascript->script->set_focus_script('username');
+			$this->script->set_focus_script('username');
 		}
 	}
 	
@@ -104,12 +104,18 @@ class Controller_Signup extends Controller_Site
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_page_error($e->errors('user'));
+				$this->message = new Message_Error_Signup(array(
+					'messages' => $e->errors('user')
+				));
 			}
 		}
 		else
 		{
-			$this->_page_error('Session time out, try again.', 'username');
+			$this->message = new Kollection_Message_Error(array(
+				'messages' => '<strong>ERROR!</strong> Session time out, try again.'
+			));
+			
+			$this->script->set_focus_script('username');
 		}
 		
 		return FALSE;

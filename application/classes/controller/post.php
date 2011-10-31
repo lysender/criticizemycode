@@ -46,7 +46,7 @@ class Controller_Post extends Controller_Site {
 		}
 		else
 		{
-			$this->template->javascript->script->set_focus_script('title');
+			$this->script->set_focus_script('title');
 		}
 	}
 	
@@ -112,12 +112,18 @@ class Controller_Post extends Controller_Site {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_page_error($e->errors('code'));
+				$this->message = new Message_Error_Post(array(
+					'messages' => $e->errors('code')
+				));
 			}
 		}
 		else
 		{
-			$this->_page_error('Session timeout, try again', 'title');
+			$this->message = new Kollection_Message_Error(array(
+				'messages' => '<strong>ERROR!</strong> Session time out, try again.'
+			));
+			
+			$this->script->set_focus_script('title');
 		}
 	}
 	
@@ -143,7 +149,7 @@ class Controller_Post extends Controller_Site {
 		}
 		else
 		{
-			$this->template->javascript->script->set_focus_script('title');
+			$this->script->set_focus_script('title');
 		}
 	}
 	
@@ -191,12 +197,18 @@ class Controller_Post extends Controller_Site {
 			}
 			catch (ORM_Validation_Exception $e)
 			{
-				$this->_page_error($e->errors('code'));
+				$this->message = new Message_Error_Post(array(
+					'messages' => $e->errors('code')
+				));
 			}
 		}
 		else
 		{
-			$this->_page_error('Session timeout, try again', 'title');
+			$this->message = new Kollection_Message_Error(array(
+				'messages' => '<strong>ERROR!</strong> Session time out, try again.'
+			));
+			
+			$this->script->set_focus_script('title');
 		}
 	}
 }

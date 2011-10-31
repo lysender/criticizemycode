@@ -1,12 +1,7 @@
 <h1>Login</h1>
 
 <div id="form-wrapper">
-	
-	<?php echo View::factory('site/messages')
-		->bind('error_message', $error_message)
-		->bind('success_message', $success_message)
-		->bind('warning_message', $warning_message)
-	?>
+	<?php echo $message ?>
 	
 	<form action="<?php echo URL::site('/login') ?>" method="post" enctype="multipart/form-data">
 		<fieldset>

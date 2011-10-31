@@ -1,8 +1,7 @@
 <h1>Post your awesome code</h1>
 
 <div id="form-wrapper">
-	<?php echo View::factory('site/formerrors')
-		->bind('error_message', $error_message) ?>
+	<?php echo $message ?>
 	
 	<p><strong>Note:</strong> You can use <a href="#">Markdown</a> syntax to format your post. For more information, <a href="#">click here</a>.</p>
 	

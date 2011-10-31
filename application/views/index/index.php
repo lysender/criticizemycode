@@ -1,10 +1,6 @@
 <h1>Welcome! We are in our pre-beta!</h1>
 
-<?php echo View::factory('site/messages')
-	->bind('error_message', $error_message)
-	->bind('success_message', $success_message)
-	->bind('warning_message', $warning_message)
-?>
+<?php echo $message ?>
 
 <p><strong>CriticizeMyCode.com</strong> is an online code sharing, reviewing
 and criticizing site for developer's code, whether it is the best, the worst

@@ -44,9 +44,14 @@ abstract class Controller_Site extends Controller_Template
 	public $session;
 	
 	/**
-	 * @var  Form_Error
+	 * @var  Kollection_Script
 	 */
-	public $form_error;
+	public $script;
+	
+	/**
+	 * @var  Kollection_Message
+	 */
+	public $message;
 	
 	/** 
 	 * Whether or not the user is required to be authenticated or not
@@ -126,9 +131,6 @@ abstract class Controller_Site extends Controller_Template
 		
 		// Initialize flash messages
 		$this->_init_messages();
-		
-		// Initialize form error object
-		$this->form_error = new Form_Error;
 	}
 
 	/** 
@@ -147,8 +149,8 @@ abstract class Controller_Site extends Controller_Template
 		$this->template->head->styles = array();
 		
 		// Set required js files
-		$this->template->javascript->script = new Kollection_Script(new Kollection_Script_Bootstrap);
-		$this->template->javascript->script->set_cache_buster('?v='.APP_VERSION)
+		$this->script = new Kollection_Script(new Kollection_Script_Bootstrap);
+		$this->script->set_cache_buster('?v='.APP_VERSION)
 			->add_file('media/js/jquery-1.6.4.min.js')
 			->add_file('media/bootstrap/js/bootstrap-alerts.js');
 		
@@ -223,23 +225,21 @@ abstract class Controller_Site extends Controller_Template
 	 * 
 	 */
 	protected function _init_messages()
-	{
+	{	
 		// Display error message to template when there was a passed message
 		if ($error_message = $this->session->get_once('error_message'))
 		{
-			if ($this->auto_render)
-			{
-				View::bind_global('error_message', $error_message);
-			}
+			$this->message = new Kollection_Message_Error(array(
+				'messages' => $error_message
+			));
 		}
 
 		// Display success message to template when there was a passed message
 		if ($success_message = $this->session->get_once('success_message'))
 		{
-			if ($this->auto_render)
-			{
-				View::bind_global('success_message', $success_message);
-			}
+			$this->message = new Kollection_Message_Success(array(
+				'messages' => $success_message
+			));
 		}
 	}
 	
@@ -252,6 +252,9 @@ abstract class Controller_Site extends Controller_Template
 	{
 		if ($this->auto_render)
 		{
+			$this->_detect_error_focus();
+			$this->template->javascript->script = $this->script;
+			
 			// Add token value initialization
 			$this->template->javascript->csrf_token = $this->_new_token;
 			
@@ -263,74 +266,38 @@ abstract class Controller_Site extends Controller_Template
 			
 			// Set body content
 			$this->template->content = $this->view;
+			$this->template->content->message = $this->message;
 		}
 
 		return parent::after();
 	}
 	
-	/** 
-	 * Sets the error message to view
-	 * 
-	 * @param   mixed	$error
-	 * @param   mixed	$focus
+	/**
+	 * Checks if it is possible to focus on a form element
+	 * when there are error messages and sets focus script
+	 * if possible
+	 *
 	 * @return  void
 	 */
-	protected function _page_error($error, $focus = TRUE)
+	protected function _detect_error_focus()
 	{
-		if ($this->auto_render)
+		if ($this->message instanceof Kollection_Message)
 		{
-			if (is_array($error))
-			{	
-				// Merge external errors from orm validation
-				// to the main error array
-				if ( ! empty($error['_external']))
+			if ($this->message->get_type() == Kollection_Message::TYPE_ERROR)
+			{
+				$errors = $this->message->get_messages();
+				
+				if (is_array($errors))
 				{
-					$ext = $error['_external'];
-					unset($error['_external']);
+					$keys = array_keys($errors);
+					$first_key = reset($keys);
 					
-					foreach ($ext as $key => $value)
+					if ( ! is_numeric($first_key))
 					{
-						$error[$key] = $value;
+						$this->script->set_focus_script($first_key);
 					}
 				}
-				
-				$error_keys = array_keys($error);
-				$first_error = current($error_keys);
-				
-				$this->view->error_message = implode('<br />', $error);
-				
-				if ($focus === TRUE)
-				{
-					$this->template->javascript->script->set_focus_script($first_error);
-				}
 			}
-			else
-			{
-				$this->view->error_message = $error;
-			}
-			
-			if (is_string($focus))
-			{
-				$this->template->javascript->script->set_focus_script($focus);
-			}
-		}
-	}
-	
-	/** 
-	 * Focus to the first error from all given errors
-	 * 
-	 * @param   array	$errors
-	 * @return  void
-	 */
-	protected function _first_error_focus(array $errors)
-	{
-		$error_keys = array_keys($errors);
-		
-		if ( ! empty($error_keys))
-		{
-			$first_error = current($error_keys);
-			
-			$this->template->javascript->script->set_focus_script($first_error);
 		}
 	}
 	

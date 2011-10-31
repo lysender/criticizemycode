@@ -49,10 +49,8 @@ class Controller_Login extends Controller_Site
 				}
 			}
 		}
-		else
-		{
-			$this->template->javascript->script->set_focus_script('email');
-		}
+		
+		$this->script->set_focus_script('email');
 	}
 	
 	/**
@@ -74,12 +72,16 @@ class Controller_Login extends Controller_Site
 			}
 			else
 			{
-				$this->_page_error('Incorrect username or password.', 'email');
+				$this->message = new Kollection_Message_Error(array(
+					'messages' => '<strong>ERROR!</strong> Incorrect username or password.'
+				));
 			}
 		}
 		else
 		{
-			$this->_page_error('Session time out, try again.', 'email');
+			$this->message = new Kollection_Message_Error(array(
+				'messages' => '<strong>ERROR!</strong> Session time out, try again.'
+			));
 		}
 		
 		return FALSE;
