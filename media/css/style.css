@@ -163,10 +163,11 @@ header {
 	padding: 20px 0;
 }
 #main-content > h1, #side-bar > h1 {
-	font-size: 1.7em;
+	font-size: 1.8em;
 	font-weight: normal;
-	margin: 0 0 1em 0;
+	margin: 0 0 0.2em 0;
 	text-transform: none;
+	line-height: 1.5em;
 }
 #form-wrapper {
 	border-top: 1px solid #ECE9E6;
@@ -211,39 +212,10 @@ footer .container {
 #form-wrapper {
 	width: 100%;
 }
-
-/** Comment form styles **/
-#code-comment-form #comment {
-	width: 450px;
-	height: 100px;
-}
-#code-comment-form #language_id {
-	width: 250px;
-}
-#comment-messaging {
-	padding: 0;
-	margin: 0;
-	width: 458px;
-	height: 52px;
-}
-#comment-messaging .error,
-#comment-messaging .success {
-	display: none;
-	margin-top: 10px;
-}
-#post-comment-w {
+#code-meta {
+	padding-bottom: 10px;
+	border-bottom: dotted 1px #DDD;
 	margin-bottom: 10px;
-}
-#post-comment-w .comment-w {
-	padding: 5px 5px 5px 35px;
-	margin-top: 10px;
-	border-top: dotted 1px #ddd;
-}
-#post-comment-w .comment-author {
-	text-align: right;
-}
-.comment-author .comment-date {
-	color: #999;
 }
 /** Index page styles **/
 #code-post-list,

@@ -34,6 +34,7 @@ class Controller_Browse_Code extends Controller_Site {
 		}
 		
 		$this->template->head->styles[] = 'media/css/code.css';
+		$this->template->head->styles[] = 'media/css/comment.css';
 		$this->template->head->styles[] = 'media/sh/styles/shCore.css';
 		$this->template->head->styles[] = 'media/sh/styles/shThemeRDark.css';
 
@@ -81,8 +82,6 @@ class Controller_Browse_Code extends Controller_Site {
 			));
 			$this->view->comment_form = View::factory('comment/form')
 				->set('code_id', $this->_code->id)
-				->set('language_options', $language_options)
-				->set('default_language', $default_language)
 				->set('comment_post_url', $comment_post_url);
 		}
 	}

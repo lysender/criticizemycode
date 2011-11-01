@@ -1,5 +1,5 @@
 <form class="form-stacked" id="code-comment-form" method="post" action="<?php echo $comment_post_url ?>" enctype="multipart/form-data">
-	<p><strong>Note:</strong> You can use <a href="#">Markdown</a> syntax to format your post. For more information, <a href="#">click here</a>.</p>
+	<p><strong>Note:</strong> You can use <a href="<?php echo URL::site('/help/markdown') ?>">Markdown</a> syntax to format your post. For more information, <a href="<?php echo URL::site('/help/markdown') ?>">click here</a>.</p>
 	
 	<fieldset>
 		<div class="clearfix">

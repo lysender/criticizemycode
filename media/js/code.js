@@ -63,7 +63,7 @@ window.CommentForm = {
 		var action = this.action;
 		var postData = {
 			"comment": $("#comment").val(),
-			"csrf": $(this).find("input[name=csrf]").val()
+			"csrf_token": $(this).find("input[name=csrf]").val()
 		};
 		
 		$.post(action, postData, function(data){

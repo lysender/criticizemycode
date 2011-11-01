@@ -104,6 +104,25 @@ class Controller_Comment extends Controller_Site {
 			$this->send_forbidden_headers();
 		}
 	}
+
+	/** 
+	 * Checks if the token is valid for the request
+	 * Does not renew the token but instead reuse the old token
+	 *
+	 * @return  boolean
+	 */
+	protected function _check_csrf_token()
+	{
+		$token = $this->request->post('csrf_token');
+		$old_token = $this->session->get('csrf_token');
+		
+		if ($token !== $old_token)
+		{
+			return FALSE;
+		}
+
+		return TRUE;
+	}
 	
 	/**
 	 * Posts a comment for a certain code post
@@ -123,14 +142,21 @@ class Controller_Comment extends Controller_Site {
 		$comment->user_id = $this->auth->get_user()->id;
 		$comment->date_posted = time();
 		
-		try
+		if ($this->_check_csrf_token())
 		{
-			$comment->create();
-			$ret['success'] = TRUE;
+			try
+			{
+				$comment->create();
+				$ret['success'] = TRUE;
+			}
+			catch (ORM_Validation_Exception $e)
+			{
+				$ret['error'] = $this->_format_errors($e->errors('comment'));
+			}
 		}
-		catch (ORM_Validation_Exception $e)
+		else
 		{
-			$ret['error'] = $this->_format_errors($e->errors('comment'));
+			$ret['error'] = 'Session time out. Reload the page and try again.';
 		}
 		
 		$this->response->headers('Content-Type', 'application/json');

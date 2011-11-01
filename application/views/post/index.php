@@ -3,7 +3,7 @@
 <div id="form-wrapper">
 	<?php echo $message ?>
 	
-	<p><strong>Note:</strong> You can use <a href="#">Markdown</a> syntax to format your post. For more information, <a href="#">click here</a>.</p>
+	<p><strong>Note:</strong> You can use <a href="<?php echo URL::site('/help/markdown') ?>">Markdown</a> syntax to format your post. For more information, <a href="<?php echo URL::site('/help/markdown') ?>">click here</a>.</p>
 	
 	<form class="form-stacked" action="<?php echo URL::site('/post') ?>" method="post" enctype="multipart/form-data">
 		<fieldset>
