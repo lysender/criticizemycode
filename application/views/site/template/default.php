@@ -9,9 +9,6 @@
 
 <div id="content">
 	<div class="container">
-		<?php if (isset($hero) && ! empty($hero)): ?>
-			<?php echo $hero ?>
-		<?php endif ?>
 		<div class="row">
 			<div id="main-content" class="span11">
 				<?php echo $content ?>
@@ -20,7 +17,6 @@
 				<?php echo $sidebar ?>
 			</div>
 		</div>
-		<div class="clear"></div>
 	</div>
 </div>
 

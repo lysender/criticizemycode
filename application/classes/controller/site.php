@@ -9,7 +9,7 @@ abstract class Controller_Site extends Controller_Template
 	/**
 	 * @var  string
 	 */
-	public $template = 'site/template';
+	public $template = 'site/template/default';
 	
 	/**
 	 * @var  string

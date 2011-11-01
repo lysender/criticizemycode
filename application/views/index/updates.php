@@ -1,6 +1,14 @@
-<?php echo $message ?>
-
 <h2>Updates</h2>
+
+<p>(2011-10-31)</p>
+
+<ul>
+	<li>Uses Twitter Bootstrap as CSS framework.</li>
+	<li>Modified common page elements to use the provided styles of Twitter Bootstrap framework.</li>
+	<li>Created scripting class/package as a part of a module.</li>
+	<li>Created messaging class/package as part of a module.</li>
+	<li>Unit tests for new classes.</li>
+</ul>
 
 <p>(2011-10-16)</p>
 
@@ -27,7 +35,3 @@ a couple of developers who can contribute a couple of hours in weekends.</p>
 project in Github. Use the branch <code>0.1.0/develop</code>.
 
 <p><a href="https://github.com/lysender/criticizemycode">CriticizeMyCode.com on github</a></p>
-
-<h2>Latest wicked codes</h2>
-
-<?php echo Request::factory('/widgets/latestcode/index')->execute()->body() ?>

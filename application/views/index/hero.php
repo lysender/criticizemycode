@@ -1,3 +1,5 @@
+<?php echo $message ?>
+
 <div class="hero-unit">
 	<h1>Criticize My Code</h1>
 
