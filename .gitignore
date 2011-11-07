@@ -11,7 +11,6 @@ Thumbs.db
 *.swp
 *.komodoproject
 *~
-.htaccess
 
 /nbproject/
 /application/cache
