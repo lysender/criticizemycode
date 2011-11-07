@@ -62,7 +62,7 @@ abstract class Purifier_Abstract {
 		$config->set('HTML.Allowed', $this->_allowed);
 
 		// Set definition cache dir
-		$config->set('Core.DefinitionCache', APPPATH.'writable');
+		$config->set('Cache.SerializerPath', APPPATH.'writable');
 		
 		$this->_purifier = new HTMLPurifier($config);
 	}
