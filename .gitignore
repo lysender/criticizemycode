@@ -16,3 +16,6 @@ Thumbs.db
 /nbproject/
 /application/cache
 /application/logs
+/application/writable
+/phpyouradmin
+
