@@ -60,6 +60,9 @@ abstract class Purifier_Abstract {
 		$config->set('Core.Encoding', $this->_encoding);
 		$config->set('HTML.Doctype', $this->_doctype);
 		$config->set('HTML.Allowed', $this->_allowed);
+
+		// Set definition cache dir
+		$config->set('Core.DefinitionCache', APPPATH.'writable');
 		
 		$this->_purifier = new HTMLPurifier($config);
 	}
