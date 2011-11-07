@@ -14,5 +14,5 @@ Thumbs.db
 .htaccess
 
 /nbproject/
-/modules
-/system
+/application/cache
+/application/logs
