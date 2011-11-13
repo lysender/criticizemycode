@@ -73,4 +73,44 @@ class Date extends Kohana_Date {
 		
 		return $span;
 	}
+
+	/** 
+	 * Checks if the date provided is valid for a given format
+	 *
+	 * @param   string	$date
+	 * @param   string	$format
+	 * @return  boolean
+	 */
+	public static function is_valid_format($date, $format)
+	{
+		if (date($format, strtotime($date) === $date))
+		{
+			return TRUE;
+		}
+
+		return false;
+	}
+
+	/** 
+	 * Returns the start and end range for a given date
+	 * in unix timestamp format
+	 *
+	 * Note: Unit is in seconds
+	 *
+	 * @param   string	$date
+	 * @return  array
+	 */
+	public static function get_day_range($date)
+	{
+		if (self::is_valid_format($date, 'Y-m-d'))
+		{
+			$start = strtotime($date.' 00:00:00');
+			// Add 1 day and deduct 1 second
+			$end = $start + (3600 * 24) - 1;
+
+			return array($start, $end);
+		}
+
+		return FALSE;
+	}
 }

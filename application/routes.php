@@ -77,6 +77,17 @@ Route::set('widgets_comment', 'widgets/comment/<code_id>')
 		'action' 	 => 'index'
 	));
 
+/** 
+ * Admin controller route group
+ *
+ */
+Route::set('admin', 'admin(/<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'directory'  => 'admin',
+		'controller' => 'index',
+		'action'     => 'index'
+	));
+
 /**
  * Set the routes. Each route must have a minimum of a name, a URI and a set of
  * defaults for the URI.

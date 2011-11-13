@@ -1,3 +1,5 @@
+2011-11-13 MNL
+	Added field cmc.users.date_registered unsigned int(10) INDEX
 2011-10-16 MNL
 	Changed index for table cmc.code.title from INDEX to UNIQUE
 	

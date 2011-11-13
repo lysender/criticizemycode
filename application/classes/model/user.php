@@ -17,8 +17,19 @@ class Model_User extends Model_Auth_User {
 		'password' => array(),
 		'logins' => array(),
 		'last_login' => array(),
+		'date_registered' => array()
 	);
 	
+	/** 
+	 * Automatically insert creation date when creating users
+	 *
+	 * @var  array
+	 */
+	protected $_created_column = array(
+		'column' => 'date_registered',
+		'format' => TRUE,
+	);
+
 	/**
 	 * @var Auth
 	 */
@@ -123,5 +134,90 @@ class Model_User extends Model_Auth_User {
 	public function get_profile_url()
 	{
 		return '/profile/'.$this->username;
+	}
+
+	/** 
+	 * Search users via passed criteria
+	 *
+	 * Parameter keys
+	 *    date_registered
+	 *    date_registered_start
+	 *    date_registered_end
+	 *    username
+	 *    email
+	 *
+	 * @param   array	$params
+	 * @return  array
+	 */
+	public function custom_search(array $params, $limit)
+	{
+		$orm = ORM::factory('user');
+
+		// Date parameters
+		if ( ! empty($params['date_registered']))
+		{
+			// Create date range for a day from 12:00 am to 11:59:59 pm
+			$range = Date::get_day_range($params['date_registered']);
+
+			if (is_array($range) && count($range) === 2)
+			{
+				$orm->where('date_registered', 'BETWEEN', DB::expr(implode(' AND ', $range)));
+			}
+		}
+		elseif ( ! empty($params['date_registered_start']) && ! empty($params['date_registered_end']))
+		{
+			$start = NULL;
+			$end = NULL;
+
+			// Start date starts at 12:00 am
+			if (Date::is_valid_format($params['date_registered_start'], 'Y-m-d'))
+			{
+				$start = strtotime($params['date_registered_start'].' 00:00:00');
+			}
+
+			// End date ends in 11:59:59 pm
+			if (Date::is_valid_format($params['date_registered_end'], 'Y-m-d'))
+			{
+				$end = strtotime($params['date_registered_end'].' 23:59:59');
+			}
+
+			// Start date should always be lesser than end date
+			if ($start && $end && $start < $end)
+			{
+				$orm->where('date_registered', 'BETWEEN', DB::expr($start.' AND '.$end));
+			}
+		}
+
+		// Username parameter
+		if (isset($params['username']) && strlen($params['username']) >= 5)
+		{
+			$orm->where('username', 'LIKE', $params['username']);
+		}
+
+		// Email parameter
+		if (isset($params['email']) && strlen($params['email']) >= 5)
+		{
+			$orm->where('email', 'LIKE', $params['email']);
+		}
+
+		$result = $orm->limit($limit)->find_all();
+		
+		// Consolidate and format result
+		$ret = array();
+
+		foreach ($result as $row)
+		{
+			$tmp = $row->as_array();
+			// Format last login and date registered
+			$tmp['pretty_last_login'] = date('Y-m-d H:i:s', $tmp['last_login']);
+			$tmp['pretty_date_registered'] = date('Y-m-d H:i:s', $tmp['date_registered']);
+			// Fuzzy span
+			$tmp['fuzzy_last_login'] = Date::extra_fuzzy_span($tmp['last_login']);
+			$tmp['fuzzy_date_registered'] = Date::extra_fuzzy_span($tmp['date_registered']);
+
+			$ret[] = $tmp;
+		}
+
+		return $ret;
 	}
 }

@@ -14,7 +14,7 @@ abstract class Controller_Site extends Controller_Template
 	/**
 	 * @var  string
 	 */
-	public $header = 'site/header';
+	public $header = 'site/section/header';
 	
 	/**
 	 * @var  Kohana_View
@@ -26,12 +26,17 @@ abstract class Controller_Site extends Controller_Template
 	 *
 	 * @var  string
 	 */
-	public $sidebar = 'site/sidebar';
+	public $sidebar = 'site/section/sidebar';
 	
 	/**
 	 * @var  string
 	 */
-	public $footer = 'site/footer';
+	public $footer = 'site/section/footer';
+
+	/** 
+	 * @var  string
+	 */
+	public $nav = 'site/section/fragment/nav';
 	
 	/**
 	 * @var  Auth
@@ -110,6 +115,16 @@ abstract class Controller_Site extends Controller_Template
 	 * @var  boolean
 	 */
 	protected $_use_token = TRUE;
+
+	/** 
+	 * Twitter Bootstrap config
+	 * 
+	 * @var  array
+	 */
+	protected $_bootstrap = array(
+		'alert' => TRUE,
+		'twipsy' => FALSE
+	);
 	
 	/** 
 	 * before()
@@ -141,9 +156,13 @@ abstract class Controller_Site extends Controller_Template
 	{
 		// Initialize all necessary views
 		$this->template->head = View::factory('site/section/fragment/head');
-		$this->template->header = View::factory('site/section/header');
-		$this->template->sidebar = View::factory('site/section/sidebar');
-		$this->template->footer = View::factory('site/section/footer');
+		$this->template->header = View::factory($this->header);
+
+		if ($this->sidebar !== NULL)
+		{
+			$this->template->sidebar = View::factory($this->sidebar);
+		}
+		$this->template->footer = View::factory($this->footer);
 		$this->template->javascript = View::factory('site/section/fragment/javascript');
 		
 		$this->template->head->styles = array();
@@ -155,7 +174,7 @@ abstract class Controller_Site extends Controller_Template
 			->add_file('media/bootstrap/js/bootstrap-alerts.js');
 		
 		// Set head nav selected
-		$this->template->header->nav = View::factory('site/section/fragment/nav')
+		$this->template->header->nav = View::factory($this->nav)
 			->set('current_controller', $this->request->controller())
 			->set('current_directory', $this->request->directory());
 	}
@@ -257,6 +276,12 @@ abstract class Controller_Site extends Controller_Template
 			
 			// Add token value initialization
 			$this->template->javascript->csrf_token = $this->_new_token;
+
+			// Configure twitter bootstrap
+			foreach ($this->_bootstrap as $plugin => $flag)
+			{
+				$this->template->javascript->set($plugin, $flag);
+			}
 			
 			// Set logout script
 			if ($this->auth->get_user())

@@ -39,13 +39,21 @@ class Controller_Login extends Controller_Site
 		{
 			if ($this->_login())
 			{
-				if ($this->_prev_page)
+				// If user is an administrator, always redirect to admin page
+				if ($this->auth->get_user()->has('roles', ORM::factory('role', array('name' => 'admin'))))
 				{
-					$this->request->redirect($this->_prev_page);
+					$this->request->redirect('/admin');
 				}
 				else
 				{
-					$this->request->redirect('/');
+					if ($this->_prev_page)
+					{
+						$this->request->redirect($this->_prev_page);
+					}
+					else
+					{
+						$this->request->redirect('/');
+					}	
 				}
 			}
 		}

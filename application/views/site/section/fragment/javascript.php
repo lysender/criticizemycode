@@ -22,6 +22,15 @@
 	}
 	
 	// Trigger bootstrap alert script
-	$script->add_ready_script('$(".alert-message").alert();');
+	if (isset($alert) && $alert)
+	{
+		$script->add_ready_script('$(".alert-message").alert();');
+	}
+
+	// Trigger twipsy if set
+	if (isset($twipsy) && $twipsy)
+	{
+		$script->add_ready_script('$(".apply-twipsy").twipsy({live: true});');
+	}
 	
 	echo $script->render();

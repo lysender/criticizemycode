@@ -14,7 +14,6 @@ class Controller_Index extends Controller_Site
 	 */
 	public function action_index()
 	{
-		$this->template->title = 'Latest codes';
 		$this->template->updates = View::factory('index/updates');
 		
 		$this->view = View::factory('index/hero');
