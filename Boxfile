@@ -5,3 +5,5 @@ web1:
     - /application/writable
     - /media/pagecache
     - /phpyouradmin
+  php_extensions:
+    - pdo_mysql
