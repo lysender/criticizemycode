@@ -31,3 +31,6 @@
 [submodule "modules/kollection"]
 	path = modules/kollection
 	url = git://github.com/lysender/kollection.git
+[submodule "application/vendor/facebook"]
+	path = application/vendor/facebook
+	url = git://github.com/facebook/php-sdk.git

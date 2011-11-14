@@ -1,5 +1,7 @@
 <h1>Login</h1>
 
+<?php echo $open_connect ?>
+
 <div id="form-wrapper">
 	<?php echo $message ?>
 	
