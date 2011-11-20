@@ -1,5 +1,7 @@
 <h1>Join the critics and be criticized</h1>
 
+<?php echo $open_connect ?>
+
 <div id="form-wrapper">
 	<?php echo $message ?>
 

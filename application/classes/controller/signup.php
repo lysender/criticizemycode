@@ -40,6 +40,7 @@ class Controller_Signup extends Controller_Site
 		
 		$this->template->head->title = 'Signup';
 		$this->view = View::factory('signup/index');
+		$this->view->open_connect = View::factory('openconnect/index');
 		
 		// Assign back the posted data to form except for passwords
 		$this->view->signup = Arr::extract(

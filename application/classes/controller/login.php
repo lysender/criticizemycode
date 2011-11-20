@@ -28,7 +28,7 @@ class Controller_Login extends Controller_Site
 	{
 		$this->template->head->title = 'Login';
 		$this->view = View::factory('login/index');
-		$this->view->open_connect = View::factory('openid/index');
+		$this->view->open_connect = View::factory('openconnect/index');
 		
 		// Assign back the posted credentials to form except for password
 		$this->view->login = Arr::extract(

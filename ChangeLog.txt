@@ -1,3 +1,5 @@
+2011-11-20 MNL
+	Changed field cmc.cmc_users.password from NOT NULL to allow NULL with default NULL
 2011-10-16 MNL
-	Changed index for table cmc.code.title from INDEX to UNIQUE
+	Changed index for table cmc.cmc_code.title from INDEX to UNIQUE
 	
