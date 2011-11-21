@@ -7,6 +7,8 @@
  */
 class Model_Openconnect extends ORM {
 
+	protected $_table_name = 'openconnect';
+
 	/**
 	 * @var array
 	 */
@@ -25,6 +27,7 @@ class Model_Openconnect extends ORM {
 	protected $_table_columns = array(
 		'id' => array(),
 		'user_id' => array(),
-		'third_party_name' => array()
+		'third_party_name' => array(),
+		'third_party_identifier' => array(),
 	);
 }

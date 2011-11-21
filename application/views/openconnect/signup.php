@@ -1,4 +1,4 @@
-<h1>You're almost there!</h1>
+<h1>Create account</h1>
 
 <p>Please enter your <strong>username</strong>. When you login next time, we will not be asking any username and password.
 <a href="/signup">For regular signup procedure, click here</a>.</p>
@@ -6,7 +6,7 @@
 <div id="form-wrapper">
 	<?php echo $message ?>
 
-	<form action="<?php echo URL::site('/openconnect/signup') ?>" method="post" enctype="multipart/form-data">
+	<form action="<?php echo $form_action ?>" method="post" enctype="multipart/form-data">
 		<fieldset>
 			<div class="clearfix">
 				<label for="username">Username</label>

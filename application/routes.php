@@ -31,6 +31,16 @@ Route::set('view_code', 'browse/code/<id>/<slug>', array('id' => '[0-9]++', 'slu
 		'action' => 'index'
 	));
 
+/** 
+ * Openconnect controller group
+ *
+ */
+Route::set('openconnect', 'openconnect/<controller>(/<action>)')
+	->defaults(array(
+		'directory' => 'openconnect',
+		'action' => 'index'
+	));
+
 /**
  * Router for search
  *

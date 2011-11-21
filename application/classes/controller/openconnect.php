@@ -11,38 +11,49 @@ class Controller_Openconnect extends Controller_Site {
 
 	public function action_facebook()
 	{
-		// Configure Facebook library
-		if ( ! class_exists('Facebook'))
-		{
-			include Kohana::find_file('vendor', 'facebook/src/facebook');
-		}
-
-		$config = Kohana::$config->load('facebook');
-
-		$this->_facebook = new Facebook(array(
-			'appId' => $config['app_id'],
-			'secret' => $config['secret'],
-			'cookie' => $config['cookie']
-		));
-
 		$this->view = View::factory('openconnect/facebook');
 
-		// Test open connect
-		var_dump($_GET);
-		$user = $this->_facebook->getUser();
+		// Start authenticating facebook
+		$facebook = new Model_Openconnect_Facebook;
+		$status = $facebook->process_auth_response($this->request);
+		$signup = array(
+			'email' => NULL,
+			'username' => NULL
+		);
 
-		if ( ! $user)
+		if ($status === Model_Openconnect_Facebook::STATUS_USER_NOT_REGISTERED)
 		{
-			$this->request->redirect($this->_facebook->getLoginUrl(array('scope' => 'email')));
+			$signup['email'] = $facebook->get_email();
+			$signup['username'] = $facebook->get_suggested_username();
 		}
-		else
-		{
-			var_dump($user);
 
-			$profile = $this->_facebook->api('/me');
-			var_dump($profile);
+		if ($username = $this->request->post('username'))
+		{
+			$signup['username'] = $username;
 		}
-		var_dump($_COOKIE, $_SESSION);
+
+		switch ($status)
+		{
+			case Model_Openconnect_Facebook::STATUS_NO_AUTH:
+				$facebook->start_auth($this->request, URL::site('/openconnect/facebook', TRUE));
+				break;
+			case Model_Openconnect_Facebook::STATUS_USER_DECLINED:
+				$this->view = View::factory('openconnect/facebook/declined');
+				break;
+			case Model_Openconnect_Facebook::STATUS_USER_NOT_REGISTERED;
+				$this->view = View::factory('openconnect/signup');
+				$this->view->signup = $signup;
+
+				break;
+			case Model_Openconnect_Facebook::STATUS_USER_REGISTERED:
+				// User is already registered, force login him and go back to home page
+				$this->auth->force_login($facebook->get_user());
+				$this->request->redirect('/');
+				break;
+			case Model_Openconnect_Facebook::STATUS_ERROR:
+				$this->view = View::factory('openconnect/facebook/error');
+				break;
+		}
 	}
 
 	public function action_twitter()
