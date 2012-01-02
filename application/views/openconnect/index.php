@@ -5,4 +5,4 @@
 	<li><a href="/openconnect/twitter"><img class="thumbnail" src="/media/images/social/twitter.png" alt=""></a></li>
 	<li><a href="/openconnect/yahoo"><img class="thumbnail" src="/media/images/social/yahoo.png" alt=""></a></li>
 	<li><a href="/openconnect/google"><img class="thumbnail" src="/media/images/social/google.png" alt=""></a></li>
-</p>
+</ul>
